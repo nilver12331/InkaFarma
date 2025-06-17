@@ -1,0 +1,43 @@
+.escala1-1{
+    transition: transform 0.3s ease;
+}
+
+.escala1-1:hover{
+    transform: scale(1.1);
+}
+
+/*Colores */
+.colorText-1{
+    color: #304165;
+}
+
+.colorText-1:hover{
+    color: #657491;
+}
+
+.colorText-2{
+    color: rgb(26, 143, 241);
+}
+/*fondos*/
+.bgVerdeI{
+    background-color: #17A15B;
+}
+.bgCelesteBajo{
+    background-color:#EAF7FE;
+}
+
+.underline-hover::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 3px;
+  background-color: #17A15B;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.underline-hover:hover::after {
+  width: 100%;
+}
