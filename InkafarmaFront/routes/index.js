@@ -5,11 +5,10 @@ router.get('/', (req, res) => {
   res.render('home');
 });
 
-/*
-router.get('/nosotros', (req, res) => {
-  res.render('nosotros');
+router.get('/catalog', (req, res) => {
+  res.render('catalog');
 });
-
+/*
 router.get('/contactanos', (req, res) => {
   res.render('contactanos');
 });
