@@ -1,0 +1,61 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  redis:
+    host: localhost
+    port: 6379
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/usuarios/**
+            - Method=GET,POST
+            - Header="Authorization, Bearer .+"
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
+                key-resolver: "#{@ipKeyResolver}"
+        - id: cliente-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/clientes/**
+            - Method=POST
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
+                key-resolver: "#{@ipKeyResolver}"
+        - id: user-secure
+          uri: lb://user-service
+          predicates:
+            - Path=/api/usuarios/secure/**
+            - Header="Authorization, Bearer .+"
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 3
+                redis-rate-limiter.burstCapacity: 5
+                key-resolver: "#{@ipKeyResolver}"
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+jwt:
+  secret: MiClaveSuperSecreta1234567890123456
+
