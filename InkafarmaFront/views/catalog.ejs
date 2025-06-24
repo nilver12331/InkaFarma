@@ -1,3 +1,148 @@
-<h1 class="text-4xl font-bold text-primary">¡catalogggg</h1>
+<!-- CONTENEDOR GENERAL -->
+<div class="catalog-wrapper container-fluid d-flex gap-3">
 
-<p class="mt-3 text-muted">funcionaaa.</p>
+
+  <!-- =====  BARRA DE FILTROS  ===== -->
+  <aside class="filters bg-white shadow-sm p-3 rounded" style="min-width:250px">
+    <h5 class="fw-bold mb-2">Filtros</h5>
+    <button id="clearFilters" class="btn btn-link p-0 mb-2 text-decoration-none">Limpiar Filtros</button>
+
+    <div class="filter-group mb-3">
+      <p class="fw-semibold mb-1">Departamento <small>(6)</small></p>
+      <% const departamentos = ['Inka Packs','Mamá y Bebé','Cuidado Personal','Belleza','Salud','Dermatología Cosmética']; %>
+      <% departamentos.forEach(dep => { %>
+        <div class="form-check">
+          <input class="form-check-input filter-departamento" type="checkbox" value="<%= dep %>">
+          <label class="form-check-label"><%= dep %></label>
+        </div>
+      <% }) %>
+    </div>
+
+    <div class="filter-group">
+      <p class="fw-semibold mb-1">Categoría <small>(16)</small></p>
+      <% const categorias = ['Pañales para Bebé','Todo en Ninet','Toallitas Húmedas','Promociones para el Cuidado Infantil','Aseo Bebé / Niños','Cuidado de Bebés y Perfumería']; %>
+      <% categorias.forEach(cat => { %>
+        <div class="form-check">
+          <input class="form-check-input filter-categoria" type="checkbox" value="<%= cat %>">
+          <label class="form-check-label"><%= cat %></label>
+        </div>
+      <% }) %>
+    </div>
+  </aside>
+
+  <!-- =====  SECCIÓN PRINCIPAL  ===== -->
+  <section class="flex-grow-1">
+
+    <!-- ----------  CARRUSEL DESTACADOS  ---------- -->
+    <h4 class="fw-bold mb-3">Los Productos Más Vistos</h4>
+    <div id="destacadosCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+      <!-- indicadores (puntos) -->
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#destacadosCarousel" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#destacadosCarousel" data-bs-slide-to="1"></button>
+      </div>
+
+      <!-- slides -->
+      <div class="carousel-inner">
+        <!-- slide 1 -->
+        <div class="carousel-item active">
+            <div class="row justify-content-center g-3">
+                
+                <!-- Producto 1 -->
+                <div class="col-md-6">
+                    <div class="card d-flex flex-row align-items-center p-3 shadow-sm h-100" style="height: 180px; max-width: 100%;">
+                        <!-- Imagen IZQUIERDA -->
+                        <img src="/img/catalog/pañales-2.jpg" alt="Producto" class="img-fluid me-3" style="max-width: 150px; max-height: 150px;">
+
+                        <!-- Contenido DERECHA -->
+                        <div class="flex-grow-1">
+                            <span class="badge bg-light text-dark mb-1">SUPER PACK</span>
+                            <h5 class="fw-bold mb-2 text-break" style="white-space: normal;">Pack Pañal Huggies Dermacare Talla P</h5>
+                            <p class="mb-1 text-decoration-line-through text-muted">S/ 105.80</p>
+                            <p class="mb-1">S/ 98.90</p>
+                            <p class="fw-bold text-danger">S/ 93.90</p>
+                            <button class="btn btn-success mt-2">Agregar al carrito</button>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 2 -->
+                <div class="col-md-6 d-none d-md-block">
+                    <div class="card d-flex flex-row align-items-center p-3 shadow-sm h-100" style="height: 180px; max-width: 100%;">
+                        <!-- Imagen IZQUIERDA -->
+                        <img src="/img/catalog/pañales-1.jpg" alt="Producto" class="img-fluid me-3" style="max-width: 150px; max-height: 150px;">
+
+                        <!-- Contenido DERECHA -->
+                        <div class="flex-grow-1">
+                            <span class="badge bg-light text-dark mb-1">SUPER PACK</span>
+                            <h5 class="fw-bold mb-2 text-break" style="white-space: normal;">
+                                Pack Packeton Pañal Babysec Super Premium XXG + Toallitas Húmedas Babysec Super Premium
+                            </h5>
+                            <p class="mb-1 text-decoration-line-through text-muted">S/ 105.00</p>
+                            <p class="mb-1">S/ 88.90</p>
+                            <p class="fw-bold text-danger">S/ 85.90</p>
+                            <button class="btn btn-success mt-2">Agregar al carrito</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- slide 2 (puedes duplicar/cambiar) -->
+        <div class="carousel-item">
+          <div class="row justify-content-center">
+            <!-- …otros dos productos… -->
+            <div class="col-md-5"><div class="card placeholder-glow" style="height:250px"></div></div>
+            <div class="col-md-5 d-none d-md-block"><div class="card placeholder-glow" style="height:250px"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- flechas -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#destacadosCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#destacadosCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+
+    <!-- ----------  RESULTADOS Y ORDEN  ---------- -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <p id="resultCount" class="mb-0">Encontramos 142 productos</p>
+
+      <div class="d-flex align-items-center gap-2">
+        <label for="sortSelect" class="form-label mb-0">Ordenar por</label>
+        <select id="sortSelect" class="form-select" style="width:200px">
+          <option selected>Selecciona una opción</option>
+          <option value="price_asc">Precio: menor a mayor</option>
+          <option value="price_desc">Precio: mayor a menor</option>
+          <option value="name_asc">Nombre A‑Z</option>
+          <option value="name_desc">Nombre Z‑A</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- ----------  LISTA DE PRODUCTOS  ---------- -->
+    <div id="productGrid" class="row gy-4"></div>
+  </section>
+</div>
+
+<!-- =========  PLANTILLA OCULTA PARA CLONAR PRODUCTOS  ========= -->
+<template id="productTemplate">
+  <div class="col-sm-6 col-md-4 col-lg-3">
+    <div class="card h-100 product-card">
+      <div class="ratio ratio-4x3"><img class="card-img-top" /></div>
+      <div class="card-body text-center d-flex flex-column">
+        <h6 class="card-title product-name mb-2"></h6>
+        <p class="mb-1 text-decoration-line-through text-muted product-price-old"></p>
+        <p class="mb-1 product-price-regular"></p>
+        <p class="fw-bold text-danger product-price-offer"></p>
+        <button class="btn btn-success mt-auto">Agregar al carrito</button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script src="/js/catalog.js"></script>

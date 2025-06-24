@@ -1,0 +1,69 @@
+
+/* ===== CATÁLOGO GENERAL ===== */
+.catalog-wrapper {
+  margin-top: 1rem;
+}
+
+/* ===== FILTROS ===== */
+.filters {
+  min-width: 240px;
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  height: fit-content;
+  position: sticky;
+  top: 1rem;
+}
+
+/* ===== PRODUCTOS ===== */
+.product-card {
+  border: 1px solid #e1e1e1;
+  border-radius: 10px;
+  transition: box-shadow 0.25s ease;
+}
+.product-card:hover {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+.product-card .card-img-top {
+  object-fit: contain;
+  max-height: 200px;
+  padding: 10px;
+}
+
+/* ===== CARRUSEL ===== */
+.carousel-inner img {
+  max-height: 250px;
+  object-fit: contain;
+}
+.carousel-indicators [data-bs-target] {
+  background-color: #6c757d;
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1);
+}
+.carousel-control-prev,
+.carousel-control-next {
+  width: 3rem;
+}
+/* Carrusel: formato horizontal tipo tarjeta */
+.carousel-item .card {
+  background: #fff;
+  border-radius: 12px;
+  max-width: 100%;
+}
+
+.carousel-item img {
+  border-radius: 8px;
+  object-fit: contain;
+}
+.carousel-item .card {
+  height: 180px;
+  max-width: 100%;
+}
+.carousel-item .card {
+  height: 200px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
