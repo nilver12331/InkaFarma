@@ -1,0 +1,233 @@
+<style>
+    .contProducto {
+        display: flex;
+        background: #fff;
+        border-radius: 15px;
+        padding: 20px;
+        max-width: 1300px;
+        margin: auto;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .left-panel {
+        width: 50%;
+        display: flex;
+        gap: 5px 10px;
+        align-items: center;
+    }
+
+    .thumbnails {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .thumbnails img {
+        width: 200px;
+        /*height: 80px;*/
+        border-radius: 10px;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: border 0.3s;
+    }
+
+    .thumbnails img.active {
+        border: 2px solid #0075ff;
+    }
+
+    .product-image img {
+        width: 100%;
+        /*max-width: 280px;*/
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .right-panel {
+        width: 50%;
+        padding-left: 50px;
+    }
+
+    .product-title {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .price {
+        margin-top: 10px;
+        margin-bottom: 20px;
+        display: grid;
+        gap: 0px 5px;
+        grid-template-columns: 40% 1fr;
+    }
+
+    .price span {
+        display: block;
+    }
+
+    .cls_span {
+        color: #243455;
+        font-size: .75rem;
+    }
+
+    .regular-price {
+        text-decoration: line-through;
+        color: gray;
+    }
+
+    .prom-price {
+        color: gray;
+    }
+
+    .promo-price {
+        color: red;
+        /*font-size: 24px;*/
+        font-weight: bold;
+    }
+
+    .info-list {
+        margin-top: 15px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .presentation {
+        margin: 20px 0;
+    }
+
+    .presentation button {
+        padding: 8px 20px;
+        border: 2px solid #0075ff;
+        background: #eaf2ff;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+
+    .seller {
+        margin-top: 10px;
+        margin-bottom: 20px;
+        color: #666;
+    }
+
+    .delivery-methods {
+        margin-top: 20px;
+        display: grid;
+        gap: 5px;
+        grid-template-columns: repeat(2, auto);
+        font-weight: bold;
+        font-size: 0.75rem;
+    }
+
+    .delivery-methods p {
+        margin: 5px 0;
+    }
+
+    .button-cart {
+        margin-top: 25px;
+    }
+
+    .button-cart button {
+        background: #0aaf4b;
+        color: white;
+        font-size: 16px;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 30px;
+        cursor: pointer;
+    }
+
+    .slc_stock {
+        color: #6678a1 !important;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 16px;
+        letter-spacing: .1px;
+    }
+
+    ul {
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-left: 15px !important;
+    }
+</style>
+
+<div class="contProducto">
+    <div class="left-panel">
+        <div class="thumbnails">
+            <img src="https://dcuk1cxrnzjkh.cloudfront.net/imagesproducto/035980L.jpg" class="thumb active"
+                alt="Miniatura 1" data-img="https://dcuk1cxrnzjkh.cloudfront.net/imagesproducto/035980L.jpg">
+            <img src="https://inkafarmaproductimages.s3.us-west-2.amazonaws.com/imagesproducto/035980-2L.jpg"
+                class="thumb" alt="Miniatura 2"
+                data-img="https://inkafarmaproductimages.s3.us-west-2.amazonaws.com/imagesproducto/035980-2L.jpg">
+            <img src="https://inkafarmaproductimages.s3.us-west-2.amazonaws.com/imagesproducto/035980-3L.jpg"
+                class="thumb" alt="Miniatura 3"
+                data-img="https://inkafarmaproductimages.s3.us-west-2.amazonaws.com/imagesproducto/035980-3L.jpg">
+            <img src="https://inkafarmaproductimages.s3.us-west-2.amazonaws.com/imagesproducto/035980-4L.jpg"
+                class="thumb" alt="Miniatura 4"
+                data-img="https://inkafarmaproductimages.s3.us-west-2.amazonaws.com/imagesproducto/035980-4L.jpg">
+        </div>
+        <div class="product-image">
+            <img id="main-image" src="https://dcuk1cxrnzjkh.cloudfront.net/imagesproducto/035980L.jpg"
+                alt="Ashwagandha">
+        </div>
+    </div>
+
+    <div class="right-panel">
+        <div><span class="slc_stock">FRASCO 1 UN</span></div>
+        <div class="product-title">Herbals & Health Ashwagandha Cápsulas</div>
+        <div class="price">
+            <span class="cls_span">Precio Regular</span>
+            <span class="regular-price">S/ 76.90</span>
+            <span class="cls_span">Precio Promocional</span>
+            <span class="prom-price">S/ 57.60</span>
+            <span class="cls_span">Exclusivo oh! y oh! pay</span>
+            <span class="promo-price">S/ 54.70</span>
+        </div>
+
+        <ul class="info-list cls_span">
+            <li>Suplemento 100% Herbal</li>
+            <li>Calmante para el estrés y homeostasis</li>
+            <li>RS: N7410819N NALBHR</li>
+        </ul>
+
+        <!--<div class="presentation">
+            <strong>Elige la presentación</strong><br>
+            <button>Frasco</button>
+        </div>-->
+
+        <div class="seller">
+            Vendido y despachado por: <strong>InkaFarma</strong>
+        </div>
+
+        <div class="seller">
+            <strong>Métodos de entrega disponibles: </strong>
+        </div>
+        <div class="delivery-methods">
+            <p>📦 Despacho a domicilio <span style="color: green;">Disponible</span></p>
+            <p>🏪 Retiro en botica (Gratis) <span style="color: green;">Disponible</span></p>
+        </div>
+
+        <div class="button-cart">
+            <button>Agregar al carrito</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const thumbnails = document.querySelectorAll('.thumb');
+    const mainImage = document.getElementById('main-image');
+
+    thumbnails.forEach((thumb) => {
+        thumb.addEventListener('click', () => {
+            // Remover clase activa anterior
+            thumbnails.forEach(t => t.classList.remove('active'));
+            // Agregar clase activa al seleccionado
+            thumb.classList.add('active');
+            // Cambiar imagen principal
+            const newSrc = thumb.getAttribute('data-img');
+            mainImage.setAttribute('src', newSrc);
+        });
+    });
+</script>
