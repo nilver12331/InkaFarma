@@ -1,0 +1,493 @@
+/* public/css/home.css - CONTENIDO COMPLETO Y CORREGIDO */
+
+/* Estilos Generales de Contenedores de Sección */
+.most-searched-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 15px;
+}
+
+.section-title {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 25px;
+    margin-left: 15px;
+}
+
+/* --- REGLAS GENERALES PARA PRODUCT GRIDS (5 columnas en pantallas grandes) --- */
+/* Estas reglas se aplican a los .product-grid que ocupan todo el ancho del contenedor,
+   como "Lo Más Buscado" y "Belleza Esencial" (la primera sección de belleza sin banner lateral).
+   Se busca que muestren 5 columnas en pantallas grandes. */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); /* Mínimo de 190px por tarjeta */
+    gap: 22px;
+    padding: 0 40px; /* Padding horizontal para los lados del grid */
+    justify-content: start;
+}
+
+/* Media Queries para el .product-grid GENERAL (Ancho Completo) */
+@media (min-width: 768px) { /* Tabletas */
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Intentará más columnas */
+    }
+}
+
+@media (min-width: 992px) { /* Escritorios (LG) */
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Intentará 4 o 5 columnas */
+    }
+}
+
+@media (min-width: 1200px) { /* Escritorios grandes (XL) */
+    .product-grid {
+        grid-template-columns: repeat(5, 1fr); /* 5 columnas fijas */
+    }
+}
+
+
+/* --- ESTILOS INDIVIDUALES DE LAS TARJETAS DE PRODUCTO --- */
+.product-card {
+    background-color: #fff;
+    border-radius: 12px; /* Aumentado para bordes más ovalados */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-bottom: 10px;
+    min-height: 380px; /* Altura mínima para uniformidad */
+    box-sizing: border-box; /* CRÍTICO para que padding/border no afecten el ancho */
+}
+
+.product-image-container {
+    width: 100%;
+    height: 290px; /* Altura fija del contenedor de imagen */
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centra la imagen verticalmente */
+    overflow: hidden;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.product-image {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    object-fit: contain; /* Mantiene proporciones */
+}
+
+.product-info {
+    padding: 10px 15px;
+    text-align: left;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-volume {
+    font-size: 0.75em;
+    color: #666;
+    margin-bottom: 2px;
+    font-weight: normal;
+}
+
+.product-name {
+    font-size: 1em;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+    height: 3em; /* Limita el nombre a 2 líneas */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.product-brand {
+    font-size: 0.8em;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.product-price {
+    display: flex;
+    flex-direction: column; /* Apila los precios */
+    align-items: flex-start; /* Alinea a la izquierda */
+    margin-top: auto; /* Empuja los precios y botón hacia abajo */
+    margin-bottom: 10px;
+}
+
+.old-price {
+    font-size: 0.9em;
+    color: #999;
+    text-decoration: line-through;
+    margin-bottom: 3px;
+}
+
+.current-price {
+    font-size: 1em;
+    font-weight: bold;
+    color: #333;
+}
+
+.add-to-cart-btn {
+    background-color: #28a745; /* Verde Bootstrap */
+    color: white;
+    border: none;
+    border-radius: 20px; /* Más redondeado */
+    padding: 10px 15px;
+    font-size: 1em;
+    cursor: pointer;
+    text-align: center;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #218838; /* Verde más oscuro al pasar el ratón */
+}
+
+/* Estilos para etiquetas de oferta */
+.offer-tag {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #ff007f; /* Color base */
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.75em;
+    font-weight: bold;
+    z-index: 10;
+}
+
+.jarabe-oferta {
+    background-color: #e6007e;
+}
+
+.pink-promo {
+    background-color: #ff007f;
+    top: 35px; /* Debajo de la etiqueta anterior */
+}
+
+.circle-promo {
+    background-color: #00008b;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 10px;
+    right: 10px; /* Posicionado a la derecha */
+    left: auto; /* Desactiva 'left' */
+}
+
+/* --- ESTILOS DE BANNERS Y SECCIONES ESPECÍFICAS --- */
+.legal-text-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.promo-banner-full-width,
+.promo-anuncio2,
+.promo-anuncio3,
+.banner-delgado-salud {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.banner-rexona-hombres {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.banner-Inkafit-gym {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.banner-Inkafit2-gym {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.banner-pharamol-niños {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.banner-final-web {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.promo-banner-full-width img {
+    max-width: 80%; /* Ajusta según el tamaño de tu imagen real */
+    height: auto;
+    display: block;
+}
+
+.promo-anuncio2 img {
+    max-width: 80%;
+    height: 650px; /* Ojo si esto distorsiona, quizás 'auto' sea mejor */
+    display: block;
+}
+
+.promo-anuncio3 img {
+    max-width: 77%;
+    height: auto;
+    display: block;
+}
+
+.banner-delgado-salud img {
+    max-width: 80%;
+    height: 80px;
+    display: block;
+}
+
+.banner-rexona-hombres img {
+    max-width: 80%;
+    height: 120px;
+    display: block;
+}
+
+.banner-Inkafit-gym img {
+    max-width: 83%;
+    height: 160px;
+    display: block;
+}
+
+.banner-Inkafit2-gym img {
+    max-width: 80%;
+    height: 105px;
+    display: block;
+}
+
+.banner-pharamol-niños img {
+    max-width: 90%;
+    height: 160px;
+    display: block;
+}
+
+.banner-final-web img {
+    max-width: 80%;
+    height: 100px;
+    display: block;
+}
+
+
+/* --- ESTILOS PARA LA SECCIÓN: PRODUCTOS DE OMEGA 3 --- */
+/* (Esta sección tiene banner lateral y el grid de productos está dentro de un col-lg-8) */
+
+.productos-omega-section { /* Renombrado de productos-belleza-section */
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 15px;
+}
+
+.productos-omega-content { /* Renombrado de productos-belleza-content */
+    padding: 0;
+}
+
+/* El banner lateral de Omega puede tener estilos específicos si se desea,
+   o compartir los de belleza si son idénticos. Aquí asumo que Sunvit-promo-banner
+   ya tiene sus estilos o los tendrá. */
+.Sunvit-promo-banner {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f8f8; /* Color de fondo si es diferente al de belleza */
+}
+
+.Sunvit-promo-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* ESTILOS CLAVE: AJUSTE DEL GRID PARA PRODUCTOS DE OMEGA (3 columnas) */
+/* Este selector es más específico (.col-lg-8 .product-grid-omega)
+   y debe estar AL FINAL para asegurar su prioridad. */
+.col-lg-8 .product-grid-omega { /* Renombrado de product-grid-belleza */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* ¡3 columnas iguales! */
+    gap: 20px;
+    padding: 0;
+    justify-content: start;
+}
+
+/* Media Queries para responsividad - PRODUCTOS DE OMEGA */
+@media (min-width: 992px) and (max-width: 1199px) { /* Escritorios más pequeños */
+    .col-lg-8 .product-grid-omega {
+        grid-template-columns: repeat(3, 1fr); /* Mantiene 3 columnas */
+        gap: 15px;
+    }
+}
+@media (min-width: 768px) and (max-width: 991px) { /* Tabletas */
+    .col-md-7 .product-grid-omega { /* Apunta a col-md-7 si tu HTML usa esa clase en el padre */
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas en tabletas */
+        gap: 15px;
+    }
+}
+@media (max-width: 767px) { /* Móviles (col-sm-12 o sin columnas específicas) */
+    .product-grid-omega { /* No necesita selector de columna en móvil, ocupa el 100% */
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas en móvil */
+        gap: 10px;
+        padding: 0;
+    }
+}
+
+
+/* --- ESTILOS PARA LA SECCIÓN: PRODUCTOS DE BELLEZA (con banner lateral) --- */
+/* (Esta sección tiene banner lateral y el grid de productos está dentro de un col-lg-8) */
+/* Este es el bloque que antes se llamaba "productos-belleza-section" duplicado en tu CSS original */
+
+.productos-belleza-promo-section { /* Renombrado: productos-belleza-promo-section */
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 15px;
+}
+
+.productos-belleza-promo-content { /* Renombrado: productos-belleza-promo-content */
+    padding: 0;
+}
+
+.belleza-promo-banner { /* Ya existía y puede ser reutilizado si el estilo es el mismo */
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f8f8;
+}
+
+.belleza-promo-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* ESTILOS CLAVE: AJUSTE DEL GRID PARA PRODUCTOS DE BELLEZA CON PROMO (3 columnas) */
+.col-lg-8 .product-grid-belleza-promo { /* Renombrado: product-grid-belleza-promo */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* ¡3 columnas iguales! */
+    gap: 20px;
+    padding: 0;
+    justify-content: start;
+}
+
+/* Media Queries para responsividad - PRODUCTOS DE BELLEZA CON PROMO */
+@media (min-width: 992px) and (max-width: 1199px) { /* Escritorios más pequeños */
+    .col-lg-8 .product-grid-belleza-promo {
+        grid-template-columns: repeat(3, 1fr); /* Mantiene 3 columnas */
+        gap: 15px;
+    }
+}
+@media (min-width: 768px) and (max-width: 991px) { /* Tabletas */
+    .col-md-7 .product-grid-belleza-promo { /* Apunta a col-md-7 si tu HTML usa esa clase en el padre */
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas en tabletas */
+        gap: 15px;
+    }
+}
+@media (max-width: 767px) { /* Móviles (col-sm-12 o sin columnas específicas) */
+    .product-grid-belleza-promo { /* No necesita selector de columna en móvil, ocupa el 100% */
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas en móvil */
+        gap: 10px;
+        padding: 0;
+    }
+}
+
+/* --- ESTILOS PARA LA SECCIÓN: CUIDADO BUCAL - COLGATE --- */
+.productos-colgate-section {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 15px;
+}
+
+.productos-colgate-content {
+    padding: 0;
+}
+
+.colgate-promo-banner {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f8f8; /* Or a specific Colgate-related color */
+}
+
+.colgate-promo-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* ESTILOS CLAVE: AJUSTE DEL GRID PARA PRODUCTOS DE COLGATE (3 columnas) */
+.col-lg-8 .product-grid-colgate {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales */
+    gap: 20px;
+    padding: 0;
+    justify-content: start;
+}
+
+/* Media Queries para responsividad - PRODUCTOS DE COLGATE */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .col-lg-8 .product-grid-colgate {
+        grid-template-columns: repeat(3, 1fr); /* Mantiene 3 columnas */
+        gap: 15px;
+    }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+    .col-md-7 .product-grid-colgate {
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas en tabletas */
+        gap: 15px;
+    }
+}
+@media (max-width: 767px) {
+    .product-grid-colgate {
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas en móvil */
+        gap: 10px;
+        padding: 0;
+    }
+}

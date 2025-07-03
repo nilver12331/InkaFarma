@@ -1,0 +1,140 @@
+/* public/css/login.css - CÓDIGO PARA LA VENTANA MODAL */
+
+/* Fondo oscuro que cubre toda la pantalla cuando la modal está activa */
+.modal-overlay {
+    position: fixed; /* Fijo en la ventana del navegador */
+    top: 0;
+    left: 0;
+    width: 100%; /* Cubre todo el ancho */
+    height: 100%; /* Cubre todo el alto */
+    background-color: rgba(0, 0, 0, 0.5); /* Color negro semi-transparente */
+    display: flex; /* Usamos flexbox para centrar su contenido (la modal) */
+    justify-content: center; /* Centra horizontalmente el contenido */
+    align-items: center; /* Centra verticalmente el contenido */
+    z-index: 1000; /* Asegura que esté por encima de casi todo lo demás en la página */
+}
+
+/* Contenedor principal del formulario de login dentro de la modal */
+.modal-content {
+    background-color: #fff; /* Fondo blanco */
+    padding: 20px 40px; /* Relleno interno */
+    border-radius: 8px; /* Esquinas redondeadas */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra suave para darle profundidad */
+    position: relative; /* Necesario para posicionar el botón de cerrar 'x' dentro de él */
+    width: 90%; /* Ocupa el 90% del ancho disponible */
+    max-width: 400px; /* Pero no excede los 400px de ancho */
+    text-align: center; /* Centra el texto y elementos en bloque como botones */
+}
+
+/* Botón de cerrar (la 'x' en la esquina superior derecha) */
+.close-button {
+    position: absolute; /* Posición absoluta con respecto a .modal-content */
+    top: 10px; /* A 10px del borde superior */
+    right: 20px; /* A 20px del borde derecho */
+    background: none; /* Sin fondo */
+    border: none; /* Sin borde */
+    font-size: 2em; /* Tamaño grande de la 'x' */
+    cursor: pointer; /* Cambia el cursor a una mano al pasar por encima */
+    color: #888; /* Color gris */
+    line-height: 1; /* Para alinear bien el símbolo 'x' */
+}
+.close-button:hover {
+    color: #555; /* Color más oscuro al pasar el ratón */
+}
+
+/* Contenedor de las pestañas "INICIAR SESION" y "REGISTRATE" */
+.tabs {
+    display: flex; /* Usamos flexbox para que las pestañas estén en línea */
+    justify-content: space-around; /* Distribuye el espacio uniformemente entre ellas */
+    margin-bottom: 25px; /* Espacio debajo de las pestañas */
+    border-bottom: 1px solid #eee; /* Línea divisoria en la parte inferior */
+    padding-bottom: 10px; /* Espacio entre el texto de la pestaña y la línea */
+}
+
+/* Estilo individual de cada pestaña */
+.tabs .tab {
+    font-weight: bold; /* Texto en negrita */
+    color: #aaa; /* Color gris claro */
+    cursor: pointer; /* Cambia el cursor a una mano */
+    padding: 0 10px; /* Relleno horizontal */
+    position: relative; /* Para posicionar la línea verde de 'active' */
+}
+
+/* Estilo para la pestaña activa */
+.tabs .tab.active {
+    color: #28a745; /* Color verde de Inkafarma */
+}
+.tabs .tab.active::after { /* Crea una pseudo-elemento para la línea verde debajo de la pestaña activa */
+    content: '';
+    position: absolute;
+    bottom: -11px; /* Posiciona la línea debajo del texto de la pestaña */
+    left: 0;
+    width: 100%; /* La línea abarca todo el ancho de la pestaña */
+    height: 3px; /* Grosor de la línea */
+    background-color: #28a745; /* Color verde de la línea */
+}
+
+/* Contenedor del logo de Inkafarma */
+.logo-container {
+    margin-bottom: 20px; /* Espacio debajo del logo */
+}
+.login-logo {
+    height: 40px; /* Altura del logo */
+    width: auto; /* Mantiene la proporción */
+}
+
+/* Contenedor del formulario, para centrar los inputs */
+.login-form-container {
+    width: 100%;
+    max-width: 300px; /* Ancho máximo del formulario real */
+    margin: 0 auto; /* Centra el formulario horizontalmente */
+}
+
+/* Estilo de los campos de entrada (Correo, Contraseña) */
+.login-input {
+    width: 100%;
+    padding: 12px 15px; /* Relleno interno */
+    margin-bottom: 15px; /* Espacio entre campos */
+    border: 1px solid #ddd; /* Borde gris claro */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 1em; /* Tamaño de fuente estándar */
+    box-sizing: border-box; /* Asegura que padding y border se incluyan en el ancho */
+}
+.login-input:focus { /* Estilo al enfocar el campo */
+    outline: none; /* Elimina el contorno por defecto del navegador */
+    border-color: #28a745; /* Borde verde al enfocar */
+    box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.2); /* Sombra verde suave */
+}
+
+/* Estilo del botón "INICIAR" */
+.login-button {
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #28a745; /* Verde de Inkafarma */
+    color: white; /* Texto blanco */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 1.1em; /* Fuente un poco más grande */
+    font-weight: bold; /* Texto en negrita */
+    cursor: pointer; /* Cursor de mano */
+    transition: background-color 0.3s ease; /* Transición suave al pasar el ratón */
+}
+.login-button:hover {
+    background-color: #218838; /* Verde más oscuro al pasar el ratón */
+}
+
+/* Estilo para el texto "¿Olvidaste Contraseña?" */
+.forgot-password {
+    margin-top: 25px;
+    font-size: 0.9em;
+    color: #555;
+    cursor: pointer;
+}
+.forgot-password:hover {
+    text-decoration: underline; /* Subrayado al pasar el ratón */
+}
+
+/* Clase para ocultar la modal inicialmente (maneja por JavaScript) */
+.hidden {
+    display: none; /* Oculta completamente el elemento */
+}
