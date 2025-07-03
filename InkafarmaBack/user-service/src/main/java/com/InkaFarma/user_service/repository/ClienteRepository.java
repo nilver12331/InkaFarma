@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente,Integer> {
-   // Cliente findByUsuario(Usuario usuario);
-    Cliente findByUsuarioIdUsuario(int idUsuario);
+
+
+    Cliente findByPersonaIdPersona(Integer idPersona);
 }

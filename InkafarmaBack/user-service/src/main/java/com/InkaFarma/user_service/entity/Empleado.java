@@ -15,16 +15,6 @@ public class Empleado {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idEmpleado;
     @OneToOne
-    @JoinColumn(name = "id_usuario", referencedColumnName = "idUsuario")
-    private Usuario usuario;
-    private String nombre;
-    private String apellidoPaterno;
-    private String apellidoMaterno;
-    @Column(length = 8, unique = true)
-    private String dni;
-    @Column(length = 9)
-    private String telefono;
-    @Column(unique = true)
-    private String correo;
-    private boolean estado;
+    @JoinColumn(name = "id_persona",referencedColumnName = "idPersona")
+    private Persona persona;
 }

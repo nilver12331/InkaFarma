@@ -16,12 +16,18 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idUsuario;
-    String usuario;
-    String clave;
 
-    /*Atributos de la clase que no van hacer mapeados*/
-    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private Cliente cliente;
+    private String usuario;
+    private String clave;
+
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "id_persona",referencedColumnName = "idPersona")
+    private Persona persona;
+    @ManyToOne
+    @JoinColumn(name = "id_estado",referencedColumnName = "idEstado")
+    private Estado estado;
+    //Atributos de la clase que no van hacer mapeados
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<UsuarioRol> roles;
+
 }

@@ -1,16 +1,13 @@
 package com.InkaFarma.user_service.service;
 
-import com.InkaFarma.user_service.entity.Cliente;
-import com.InkaFarma.user_service.entity.Rol;
-import com.InkaFarma.user_service.entity.Usuario;
-import com.InkaFarma.user_service.entity.UsuarioRol;
-import com.InkaFarma.user_service.repository.ClienteRepository;
-import com.InkaFarma.user_service.repository.RolRepository;
-import com.InkaFarma.user_service.repository.UsuarioRepository;
-import com.InkaFarma.user_service.repository.UsuarioRolRepository;
+import com.InkaFarma.user_service.entity.*;
+import com.InkaFarma.user_service.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 
 @Service
 public class ClienteService {
@@ -22,25 +19,47 @@ public class ClienteService {
     private UsuarioRepository usuarioRepository;
     @Autowired
     private UsuarioRolRepository usuarioRolRepository;
+    @Autowired
+    private EstadoRepository estadoRepository;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+    private static final int ROL_CLIENTE = 1;
+    private static final int ESTADO_ACTIVO=1;
     @Transactional
-    public void registrarCliente(Usuario usuario, Cliente cliente, int idRol){
-        //Buscamos el rol
-        Rol rol=rolRepository.findByIdRol(idRol)
-                .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
+    public void registrarCliente(Usuario usuario) {
+        // Verificar que el usuario no exista (por nombre de usuario, no por clave)
+        if (usuarioRepository.findByUsuario(usuario.getUsuario()) != null) {
+            throw new RuntimeException("El usuario ya existe. Intente con otro nombre de usuario.");
+        }
+        // Obtener el rol cliente
+        Rol rolCliente = rolRepository.findById(ROL_CLIENTE)
+                .orElseThrow(() -> new RuntimeException("Rol CLIENTE no encontrado"));
 
-        //Guardar el usuario
+        // Obtener el estado ACTIVO
+        Estado estadoUsuario = estadoRepository.findByIdEstado(ESTADO_ACTIVO)
+                .orElseThrow(() -> new RuntimeException("Estado ACTIVO no encontrado"));
+
+        // Asignar estado al usuario
+        usuario.setEstado(estadoUsuario);
+
+        // Preparar relación usuario-rol
+        UsuarioRol usuarioRol = new UsuarioRol();
+        usuarioRol.setUsuario(usuario);
+        usuarioRol.setRol(rolCliente);
+
+        // Asignar lista de roles al usuario
+        usuario.setRoles(Collections.singletonList(usuarioRol));
+
+        //Encriptamos la clave del usuario
+        String claveEncriptada=passwordEncoder.encode(usuario.getClave());
+        usuario.setClave(claveEncriptada);
+
+        // Guardar usuario (se guarda persona automáticamente si tienes cascade en @OneToOne)
         usuarioRepository.save(usuario);
 
-        //Asociamos el cliente al usuario
-        cliente.setUsuario(usuario);
+        // Guardar cliente asociado a la persona del usuario
+        Cliente cliente = new Cliente();
+        cliente.setPersona(usuario.getPersona());
         clienteRepository.save(cliente);
-
-        //Crear la relacion usuario-rol
-        UsuarioRol usuarioRol=new UsuarioRol();
-        usuarioRol.setUsuario(usuario);
-        usuarioRol.setRol(rol);
-
-        //Guardamos el usuarioRol
-        usuarioRolRepository.save(usuarioRol);
     }
 }

@@ -1,5 +1,6 @@
 package com.InkaFarma.user_service.controller;
 
+import com.InkaFarma.user_service.dto.ObtenerUsuarioCliente;
 import com.InkaFarma.user_service.entity.Cliente;
 import com.InkaFarma.user_service.entity.Usuario;
 import com.InkaFarma.user_service.service.UsuarioService;
@@ -17,13 +18,13 @@ public class UsuarioController {
     public UsuarioController(UsuarioService usuarioService){
         this.usuarioService=usuarioService;
     }
-    @PostMapping("/loguin")
-    public ResponseEntity<?>login(@RequestBody Usuario usuario){
-        Cliente cliente=usuarioService.verificarCredenciales(usuario);
-        if(cliente!=null){
-            return ResponseEntity.ok(cliente);
+    @PostMapping("/login-cliente")
+    public ResponseEntity<?>loginCliente(@RequestBody Usuario usuario){
+        ObtenerUsuarioCliente Usuariocliente=usuarioService.verificarCredencialesCliente(usuario);
+        if(Usuariocliente!=null){
+            return ResponseEntity.ok(Usuariocliente);
         }else{
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no encontrado o credenciales incorrectas");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas o no esta registrado como cliente.");
         }
     }
 }

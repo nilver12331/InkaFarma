@@ -20,7 +20,6 @@ spring:
           predicates:
             - Path=/api/usuarios/**
             - Method=GET,POST
-            - Header="Authorization, Bearer .+"
           filters:
             - name: RequestRateLimiter
               args:
@@ -32,6 +31,17 @@ spring:
           predicates:
             - Path=/api/clientes/**
             - Method=POST
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
+                key-resolver: "#{@ipKeyResolver}"
+        - id: producto-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/productos**
+            - Method=GET,POST
           filters:
             - name: RequestRateLimiter
               args:
@@ -58,4 +68,5 @@ eureka:
 
 jwt:
   secret: MiClaveSuperSecreta1234567890123456
-
+config:
+  jwt-enabled: false

@@ -1,6 +1,7 @@
 package com.InkaFarma.user_service.controller;
 
 import com.InkaFarma.user_service.dto.RegistroClienteRequest;
+import com.InkaFarma.user_service.entity.Usuario;
 import com.InkaFarma.user_service.service.ClienteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +19,9 @@ public class ClienteController {
         this.clienteService = clienteService;
     }
     @PostMapping("/registrarCliente")
-    public ResponseEntity<String> registrarCliente(@RequestBody RegistroClienteRequest request) {
+    public ResponseEntity<String> registrarCliente(@RequestBody Usuario request) {
         try {
-            clienteService.registrarCliente(request.getUsuario(), request.getCliente(), request.getIdRol());
+            clienteService.registrarCliente(request);
             return ResponseEntity.status(HttpStatus.CREATED).body("Cliente registrado correctamente.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al registrar cliente: " + e.getMessage());
