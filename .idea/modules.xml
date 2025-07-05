@@ -3,6 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/InkaFarma.iml" filepath="$PROJECT_DIR$/.idea/InkaFarma.iml" />
+      <module fileurl="file://$PROJECT_DIR$/InkafarmaBack/api-gateway/api-gateway.iml" filepath="$PROJECT_DIR$/InkafarmaBack/api-gateway/api-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/InkafarmaBack/catalog-service/catalog-service.iml" filepath="$PROJECT_DIR$/InkafarmaBack/catalog-service/catalog-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/InkafarmaBack/eureka-server/eureka-server.iml" filepath="$PROJECT_DIR$/InkafarmaBack/eureka-server/eureka-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/InkafarmaBack/product-service/product-service.iml" filepath="$PROJECT_DIR$/InkafarmaBack/product-service/product-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/InkafarmaBack/user-service/user-service.iml" filepath="$PROJECT_DIR$/InkafarmaBack/user-service/user-service.iml" />
     </modules>
   </component>
 </project>

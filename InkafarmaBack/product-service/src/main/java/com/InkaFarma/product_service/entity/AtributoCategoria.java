@@ -1,5 +1,6 @@
 package com.InkaFarma.product_service.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,10 +15,12 @@ public class AtributoCategoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idAtributoCatengoria;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_categoria",referencedColumnName = "idCategoria")
+    @JsonIgnore
     private Categoria categoria;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_atributo",referencedColumnName = "idAtributo")
+    @JsonIgnore
     private Atributo atributo;
 }

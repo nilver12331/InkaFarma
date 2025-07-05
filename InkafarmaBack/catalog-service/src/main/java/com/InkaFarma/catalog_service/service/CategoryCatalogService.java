@@ -16,7 +16,13 @@ public class CategoryCatalogService implements CategoryCatalogInterface {
         this.webClient = builder.baseUrl("http://product-service").build();
     }
     @Override
-    public List<Categoria> listar_categoria(){
-        return;
+    public List<Categoria> listar_categoria() {
+        return webClient
+                .get()
+                .uri("/api/categorias") // este es mi /api/categorias
+                .retrieve()
+                .bodyToFlux(Categoria.class)
+                .collectList()
+                .block(); // solo si estás usando programación sincrónica
     }
 }
