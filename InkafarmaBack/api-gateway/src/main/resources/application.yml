@@ -37,11 +37,44 @@ spring:
                 redis-rate-limiter.replenishRate: 5
                 redis-rate-limiter.burstCapacity: 10
                 key-resolver: "#{@ipKeyResolver}"
+        - id: category-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/category/**
+            - Method=GET,POST,PUT
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
+                key-resolver: "#{@ipKeyResolver}"
         - id: producto-service
           uri: lb://product-service
           predicates:
-            - Path=/api/productos**
-            - Method=GET,POST
+            - Path=/api/productos/**
+            - Method=GET,POST,PUT
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
+                key-resolver: "#{@ipKeyResolver}"
+        - id: atributo-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/atributos/**
+            - Method=GET,POST,PUT
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
+                key-resolver: "#{@ipKeyResolver}"
+        - id: atributo-categorize-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/atributo-categoria/**
+            - Method=GET,POST,PUT,DELETE
           filters:
             - name: RequestRateLimiter
               args:
