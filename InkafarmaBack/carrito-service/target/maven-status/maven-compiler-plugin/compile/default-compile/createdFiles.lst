@@ -1,0 +1,6 @@
+com\InkaFarma\carrito_service\CarritoServiceApplication.class
+com\InkaFarma\carrito_service\entity\Carrito.class
+com\InkaFarma\carrito_service\entity\CarritoItem.class
+com\InkaFarma\carrito_service\repository\CarritoRepository.class
+com\InkaFarma\carrito_service\repository\CarritoItemRepository.class
+com\InkaFarma\carrito_service\controller\CarritoController.class
