@@ -2,6 +2,7 @@ package com.InkaFarma.inventario_service.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Table(name = "movimiento_stock")
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class MovimientoStock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
