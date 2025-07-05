@@ -92,6 +92,17 @@ spring:
                 redis-rate-limiter.replenishRate: 5
                 redis-rate-limiter.burstCapacity: 10
                 key-resolver: "#{@ipKeyResolver}"
+        - id: carrito-service
+          uri: lb://carrito-service
+          predicates:
+            - Path=/api/carrito/**
+            - Method=GET,POST,PUT,DELETE
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
+                key-resolver: "#{@ipKeyResolver}"
         - id: user-secure
           uri: lb://user-service
           predicates:
