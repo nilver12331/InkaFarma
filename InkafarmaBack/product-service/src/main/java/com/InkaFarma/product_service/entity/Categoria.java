@@ -1,5 +1,6 @@
 package com.InkaFarma.product_service.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,8 +16,11 @@ import java.util.List;
 public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idCategoria;
+    private Integer idCategoria;
     private String nombre;
-    @OneToMany(mappedBy = "categoria")
+
+    @OneToMany(mappedBy = "categoria", fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<AtributoCategoria> atributoCategoriaList;
+
 }

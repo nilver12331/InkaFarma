@@ -1,5 +1,7 @@
 package com.InkaFarma.product_service.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,9 +17,13 @@ public class AtributoCategoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idAtributoCatengoria;
     @ManyToOne
-    @JoinColumn(name = "id_categoria",referencedColumnName = "idCategoria")
+    @JoinColumn(name = "id_categoria")
+    @JsonBackReference
     private Categoria categoria;
+
     @ManyToOne
-    @JoinColumn(name = "id_atributo",referencedColumnName = "idAtributo")
+    @JoinColumn(name = "id_atributo")
     private Atributo atributo;
+
 }
+

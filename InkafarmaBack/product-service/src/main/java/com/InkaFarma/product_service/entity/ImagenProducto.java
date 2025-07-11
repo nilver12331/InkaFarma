@@ -1,5 +1,6 @@
 package com.InkaFarma.product_service.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +19,7 @@ public class ImagenProducto {
 
     @ManyToOne
     @JoinColumn(name = "id_producto", referencedColumnName = "idProducto")
+    @JsonIgnore
     private Producto producto;
 
     @Column(columnDefinition = "TEXT")
