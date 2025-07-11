@@ -1,0 +1,7 @@
+com\InkaFarma\inventario_service\entity\Inventario.class
+com\InkaFarma\inventario_service\controller\InventarioController.class
+com\InkaFarma\inventario_service\repository\MovimientoStockRepository.class
+com\InkaFarma\inventario_service\InventarioServiceApplication.class
+com\InkaFarma\inventario_service\service\InventarioService.class
+com\InkaFarma\inventario_service\entity\MovimientoStock.class
+com\InkaFarma\inventario_service\repository\InventarioRepository.class
