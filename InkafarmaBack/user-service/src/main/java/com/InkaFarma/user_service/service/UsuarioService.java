@@ -68,4 +68,47 @@ public class UsuarioService {
         obtenerUsuarioCliente.setDni(usuarioEncontrado.getPersona().getDni());
         return obtenerUsuarioCliente;
     }
+
+    //Metodo original Primero
+    public Usuario recuperarPorCorreo(String correo) {
+        return usuarioRepository.findByPersonaCorreo(correo);
+    }
+
+    // NUEVO MÉTODO: Recuperar y actualizar contraseña temporal
+    public String recuperarYActualizarClavePorCorreo(String correo) {
+        Usuario usuario = usuarioRepository.findByPersonaCorreo(correo);
+        if (usuario == null) {
+            return null;
+        }
+
+        String claveTemporal = generarClaveTemporal();
+        String claveEncriptada = passwordEncoder.encode(claveTemporal);
+        usuario.setClave(claveEncriptada);
+        usuarioRepository.save(usuario);
+
+        return claveTemporal;
+    }
+
+    private String generarClaveTemporal() {
+        return "Temp" + (int)(Math.random() * 9000 + 1000);  // Ejemplo: Temp4572
+    }
+
+    public boolean actualizarClavePorCorreo(String correo, String nuevaClave) {
+        System.out.println("Recibido correo: " + correo); // Para asegurarte de lo que llega
+
+        Usuario usuario = usuarioRepository.findByPersonaCorreo(correo);
+
+        if (usuario == null) {
+            System.out.println("No se encontró usuario con el correo: " + correo);
+            return false;
+        }
+
+        String claveEncriptada = passwordEncoder.encode(nuevaClave);
+        usuario.setClave(claveEncriptada);
+        usuarioRepository.save(usuario);
+        return true;
+    }
+
+
+
 }

@@ -9,13 +9,13 @@ import java.util.List;
 
 @Entity
 @Table(name = "usuario")
-@Data  /*Genara automaticamente los metodos comunes que normalmente, @Getter y @Setter, @ToString(), @EqualsAndHashCode(), etx */
+@Data/*Genara automaticamente los metodos comunes que normalmente, @Getter y @Setter, @ToString(), @EqualsAndHashCode(), etx */
 @NoArgsConstructor  /*Genera un constructor vacio*/
 @AllArgsConstructor /*Genera un constructor con todos los campos*/
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idUsuario;
+    private Integer idUsuario;
 
     private String usuario;
     private String clave;

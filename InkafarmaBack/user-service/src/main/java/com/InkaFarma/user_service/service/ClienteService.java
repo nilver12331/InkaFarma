@@ -1,13 +1,17 @@
 package com.InkaFarma.user_service.service;
 
+import com.InkaFarma.user_service.entity.Persona;
 import com.InkaFarma.user_service.entity.*;
 import com.InkaFarma.user_service.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.InkaFarma.user_service.repository.PersonaRepository;
 
 import java.util.Collections;
+import java.util.List;
+
 
 @Service
 public class ClienteService {
@@ -20,11 +24,14 @@ public class ClienteService {
     @Autowired
     private UsuarioRolRepository usuarioRolRepository;
     @Autowired
+    private PersonaRepository personaRepository;
+    @Autowired
     private EstadoRepository estadoRepository;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
     private static final int ROL_CLIENTE = 1;
-    private static final int ESTADO_ACTIVO=1;
+    private static final int ESTADO_ACTIVO = 1;
+
     @Transactional
     public void registrarCliente(Usuario usuario) {
         // Verificar que el usuario no exista (por nombre de usuario, no por clave)
@@ -51,7 +58,7 @@ public class ClienteService {
         usuario.setRoles(Collections.singletonList(usuarioRol));
 
         //Encriptamos la clave del usuario
-        String claveEncriptada=passwordEncoder.encode(usuario.getClave());
+        String claveEncriptada = passwordEncoder.encode(usuario.getClave());
         usuario.setClave(claveEncriptada);
 
         // Guardar usuario (se guarda persona automáticamente si tienes cascade en @OneToOne)
@@ -62,4 +69,45 @@ public class ClienteService {
         cliente.setPersona(usuario.getPersona());
         clienteRepository.save(cliente);
     }
+
+    // Listar todos los clientes
+    public List<Cliente> listarClientes() {
+        return clienteRepository.findAll();
+    }
+
+    // Obtener cliente por ID
+    public Cliente obtenerClientePorId(Integer id) {
+        return clienteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado con ID: " + id));
+    }
+
+    // Actualizar cliente
+    @Transactional
+    public Cliente actualizarCliente(Integer id, Cliente clienteActualizado) {
+        Cliente clienteExistente = clienteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado con ID: " + id));
+
+        Persona personaExistente = clienteExistente.getPersona();
+        Persona personaNueva = clienteActualizado.getPersona();
+
+        if (personaExistente != null && personaNueva != null) {
+            personaExistente.setNombre(personaNueva.getNombre());
+            personaExistente.setApellidoPaterno(personaNueva.getApellidoPaterno());
+            personaExistente.setApellidoMaterno(personaNueva.getApellidoMaterno());
+            personaExistente.setDni(personaNueva.getDni());
+            personaExistente.setGenero(personaNueva.getGenero());
+            personaExistente.setTelefono(personaNueva.getTelefono());
+            personaExistente.setCorreo(personaNueva.getCorreo());
+            personaExistente.setImgPerfil(personaNueva.getImgPerfil());
+
+            // ¡IMPORTANTE! Guardar la persona modificada
+            personaRepository.save(personaExistente);
+        }
+
+        return clienteRepository.save(clienteExistente);
+    }
+
+
 }
+
+
