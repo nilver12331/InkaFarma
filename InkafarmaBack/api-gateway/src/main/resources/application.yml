@@ -8,7 +8,6 @@ spring:
   redis:
     host: localhost
     port: 6379
-
   cloud:
     gateway:
       globalcors:
@@ -16,7 +15,7 @@ spring:
         corsConfigurations:
           '[/**]':
             allowedOrigins:
-              - "http://localhost:3001"
+              - "http://localhost:3000"
             allowedMethods:
               - GET
               - POST
@@ -31,7 +30,7 @@ spring:
           uri: lb://user-service
           predicates:
             - Path=/api/usuarios/**
-            - Method=GET,POST
+            - Method=GET,POST,PUT,DELETE
           filters:
             - name: RequestRateLimiter
               args:
@@ -42,50 +41,6 @@ spring:
           uri: lb://user-service
           predicates:
             - Path=/api/clientes/**
-            - Method=POST
-          filters:
-            - name: RequestRateLimiter
-              args:
-                redis-rate-limiter.replenishRate: 5
-                redis-rate-limiter.burstCapacity: 10
-                key-resolver: "#{@ipKeyResolver}"
-        - id: category-service
-          uri: lb://product-service
-          predicates:
-            - Path=/api/category/**
-            - Method=GET,POST,PUT
-          filters:
-            - name: RequestRateLimiter
-              args:
-                redis-rate-limiter.replenishRate: 5
-                redis-rate-limiter.burstCapacity: 10
-                key-resolver: "#{@ipKeyResolver}"
-        - id: producto-service
-          uri: lb://product-service
-          predicates:
-            - Path=/api/productos/**
-            - Method=GET,POST,PUT
-          filters:
-            - name: RequestRateLimiter
-              args:
-                redis-rate-limiter.replenishRate: 5
-                redis-rate-limiter.burstCapacity: 10
-                key-resolver: "#{@ipKeyResolver}"
-        - id: atributo-service
-          uri: lb://product-service
-          predicates:
-            - Path=/api/atributos/**
-            - Method=GET,POST,PUT
-          filters:
-            - name: RequestRateLimiter
-              args:
-                redis-rate-limiter.replenishRate: 5
-                redis-rate-limiter.burstCapacity: 10
-                key-resolver: "#{@ipKeyResolver}"
-        - id: atributo-categorize-service
-          uri: lb://product-service
-          predicates:
-            - Path=/api/atributo-categoria/**
             - Method=GET,POST,PUT,DELETE
           filters:
             - name: RequestRateLimiter
@@ -97,6 +52,83 @@ spring:
           uri: lb://inventario-service
           predicates:
             - Path=/api/inventario/**
+            - Method=GET,POST,PUT,DELETE
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
+                key-resolver: "#{@ipKeyResolver}"
+        - id: category-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/category/**
+            - Method=GET,POST,PUT,DELETE
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
+                key-resolver: "#{@ipKeyResolver}"
+        - id: producto-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/productos/**
+            - Method=GET,POST,PUT,DELETE
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
+                key-resolver: "#{@ipKeyResolver}"
+        - id: atributo-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/atributos/**
+            - Method=GET,POST,PUT,DELETE
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
+                key-resolver: "#{@ipKeyResolver}"
+        - id: atributo-categoria-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/atributo-categoria/**
+            - Method=GET,POST,PUT,DELETE
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
+                key-resolver: "#{@ipKeyResolver}"
+        - id: producto-atributo-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/producto-atributo/**
+            - Method=GET,POST,PUT,DELETE
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
+                key-resolver: "#{@ipKeyResolver}"
+        - id: valor-atributo-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/valor-atributo/**
+            - Method=GET,POST,PUT,DELETE
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
+                key-resolver: "#{@ipKeyResolver}"
+        - id: catalog-service
+          uri: lb://catalog-service
+          predicates:
+            - Path=/api/catalogo/**
             - Method=GET,POST,PUT,DELETE
           filters:
             - name: RequestRateLimiter
@@ -141,7 +173,7 @@ spring:
           uri: lb://user-service
           predicates:
             - Path=/api/usuarios/secure/**
-            - Header="Authorization, Bearer .+"
+            - Header=Authorization, Bearer .+
           filters:
             - name: RequestRateLimiter
               args:
@@ -154,7 +186,6 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://localhost:8761/eureka
-
 jwt:
   secret: MiClaveSuperSecreta1234567890123456
 config:

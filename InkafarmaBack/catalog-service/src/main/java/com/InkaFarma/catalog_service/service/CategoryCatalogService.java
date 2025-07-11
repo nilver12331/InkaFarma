@@ -10,19 +10,20 @@ import java.util.List;
 @Service
 public class CategoryCatalogService implements CategoryCatalogInterface {
 
-    private final WebClient webClient; // o RestTemplate
+    private final WebClient webClient;
 
     public CategoryCatalogService(WebClient.Builder builder){
         this.webClient = builder.baseUrl("http://product-service").build();
     }
+
     @Override
     public List<Categoria> listar_categoria() {
         return webClient
                 .get()
-                .uri("/api/categorias") // este es mi /api/categorias
+                .uri("/api/category/categorias") // ¡Importante! URI correcto
                 .retrieve()
                 .bodyToFlux(Categoria.class)
                 .collectList()
-                .block(); // solo si estás usando programación sincrónica
+                .block();
     }
 }

@@ -49,4 +49,16 @@ public class CategoryController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    // Eliminar
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarCategoria(@PathVariable Integer id) {
+        try {
+            categoryService.eliminarCategoria(id);
+            return ResponseEntity.noContent().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

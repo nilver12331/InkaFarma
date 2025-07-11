@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface UsuarioRepository extends JpaRepository<Usuario,Integer> { /*Usuario ->referencia al entity y Integer-> referencia a tipo de su llave primaria*/
     //Verificar usuario y contraseña
     Usuario findByUsuario(String usuario);
+    Usuario findByPersonaCorreo(String correo);
+
 }

@@ -34,4 +34,13 @@ public class CategoryService {
     public Categoria obtenerPorId(Integer id) {
         return categoriaRepository.findById(id).orElse(null);
     }
+
+    /*Eliminar Categoria*/
+    public void eliminarCategoria(Integer id) {
+        if (!categoriaRepository.existsById(id)) {
+            throw new EntityNotFoundException("No existe la categoría con ID: " + id);
+        }
+        categoriaRepository.deleteById(id);
+    }
+
 }
