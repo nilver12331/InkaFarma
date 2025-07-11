@@ -11,6 +11,18 @@ spring:
 
   cloud:
     gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:3001"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            allowedHeaders: "*"
       discovery:
         locator:
           enabled: true
@@ -96,6 +108,28 @@ spring:
           uri: lb://carrito-service
           predicates:
             - Path=/api/carrito/**
+            - Method=GET,POST,PUT,DELETE
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
+                key-resolver: "#{@ipKeyResolver}"
+        - id: cupones-service
+          uri: lb://promotion-service
+          predicates:
+            - Path=/api/cupones/**
+            - Method=GET,POST,PUT,DELETE
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
+                key-resolver: "#{@ipKeyResolver}"
+        - id: promociones-service
+          uri: lb://promotion-service
+          predicates:
+            - Path=/api/promociones/**
             - Method=GET,POST,PUT,DELETE
           filters:
             - name: RequestRateLimiter
