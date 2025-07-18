@@ -8,4 +8,10 @@ router.get('/', (req, res) => {
 router.get('/cliente', (req, res) => {
   res.render('admin/cliente', { layout: 'layouts/admin' });
 });
+router.get('/categoria', (req, res) => {
+  res.render('admin/categoria', { layout: 'layouts/admin' });
+});
+router.get('/atributo', (req, res) => {
+  res.render('admin/atributo', { layout: 'layouts/admin' });
+});
 module.exports = router;

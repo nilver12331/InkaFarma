@@ -14,12 +14,13 @@ public class CategoryService {
     CategoriaRepository categoriaRepository;
     /*Listar Categorias */
     public List<Categoria> obtenerCategorias(){
-        return categoriaRepository.findAll();
+        return categoriaRepository.findByEstadoTrue();
     }
 
     /*Guardar Categoria */
     public Categoria crearCategoria(Categoria categoria) {
         categoria.setIdCategoria(null); // asegura que sea nuevo
+        categoria.setEstado(true);
         return categoriaRepository.save(categoria);
     }
     /*Actualizar Categorias*/
@@ -37,10 +38,10 @@ public class CategoryService {
 
     /*Eliminar Categoria*/
     public void eliminarCategoria(Integer id) {
-        if (!categoriaRepository.existsById(id)) {
-            throw new EntityNotFoundException("No existe la categoría con ID: " + id);
-        }
-        categoriaRepository.deleteById(id);
+        Categoria categoria = categoriaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No existe la categoría con ID: " + id));
+        categoria.setEstado(false);
+        categoriaRepository.save(categoria);
     }
 
 }

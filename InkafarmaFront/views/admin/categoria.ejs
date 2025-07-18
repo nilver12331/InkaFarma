@@ -1,0 +1,67 @@
+<div class="px-2">
+    <div class="mb-6">
+        <h1 class="font-bold text-3xl uppercase text-slate-800">Administrador categorias</h1>
+        <p class="py-2 text-slate-500 text-lg">Administra la información de tus categorias</p>
+    </div>
+    <div>
+        <div class="py-4 flex justify-end">
+            <button class="btn py-2 border-0 bg-cyan-600 hover:bg-cyan-700 text-slate-100" id="btnAbrirModal"><i class="fas fa-plus mr-2"></i> Agregar
+                </button>
+        </div>
+        <div id="divTablaCategoria" class="overflow-hidden rounded-lg shadow p-4 tailwind-table bg-slate-50">
+        </div>
+    </div>
+    <!--Modal de editar-->
+    <div id="modalEditarCategoria"
+        class="fixed inset-0 z-50 hidden bg-black/40 flex items-center justify-center overflow-y-auto">
+        <div class="bg-white rounded-lg w-full max-w-md shadow-lg p-6">
+            <h2 class="text-xl font-semibold mb-4">Editar categoria Categoría</h2>
+            <form id="formEditarCategoria" class="space-y-4">
+                <div>
+                    <label for="nombreEditar" class="block text-sm font-medium text-gray-700">Nombre</label>
+                    <input id="nombreEditar" name="nombre" type="text" required
+                        class="mt-1 w-full rounded border border-gray-300 outline-none focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 px-3 py-2" />
+                </div>
+                <div class="flex justify-end gap-3 pt-2">
+                    <button type="button" id="cancelarEditar" class="btn btn-outline btn-neutral">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Modal de confirmación -->
+    <div id="modalConfirmacion" class="fixed inset-0 z-50 bg-black/40 hidden flex items-center justify-center">
+        <div class="bg-white p-6 rounded-lg w-full max-w-md shadow-lg animate-fadeIn">
+            <h2 class="text-lg font-semibold mb-4">¿Estás seguro?</h2>
+            <p class="text-sm text-gray-600 mb-6">Esta acción eliminara la categoría seleccionada.</p>
+            <div class="flex justify-end gap-3">
+                <button id="cancelarModal" class="btn  btn btn-outline btn-neutral">Cancelar</button>
+                <button id="btnConfirmarEliminar" class="btn bg-rose-500 hover:bg-rose-600 text-slate-100">Sí,
+                    desactivar</button>
+            </div>
+        </div>
+    </div>
+    <!--Modal para guardar-->
+    <div id="modalNuevaCategoria"
+        class="fixed inset-0 z-50 hidden bg-black/40 flex items-center justify-center overflow-y-auto">
+        <div class="bg-white rounded-lg w-full max-w-md shadow-lg p-6">
+            <h2 class="text-xl font-semibold mb-4 text-inka">Nueva Categoría</h2>
+            <form id="formCategoria" class="space-y-4">
+                <div>
+                    <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
+                    <input id="nombre" name="nombre" type="text" required
+                        class="mt-1 w-full rounded border border-gray-300 outline-none focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 px-3 py-2" />
+                </div>
+                <div class="flex justify-end gap-3 pt-2">
+                    <button type="button" id="cancelarCrear" class="btn btn-outline btn-neutral">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--Toast-->
+<div id="toast" class="hidden fixed bottom-5 right-5 bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-2 rounded shadow z-50"></div>
+
+<!--Link de los js-->
+<script src="/js/admin/categorias.js"></script>

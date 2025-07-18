@@ -18,9 +18,8 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idCategoria;
     private String nombre;
-
+    private Boolean estado;
     @OneToMany(mappedBy = "categoria", fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<AtributoCategoria> atributoCategoriaList;
-
 }

@@ -1,0 +1,33 @@
+
+
+.input-focus-buscador:focus-within {
+    border-style: none;
+    box-shadow: 0 0 0 2px #3b82f6; /* azul suave */
+    border-color: transparent;
+    border-radius: 0.5rem; /* opcional: más redondeado */
+  }
+
+
+
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter {
+  margin-bottom: 1.5rem;
+}
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_paginate {
+  margin-top: 1.5rem;
+}
+
+/* Evita que Bootstrap afecte esta tabla */
+.tailwind-table table {
+  all: unset;
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Vuelve a aplicar Tailwind si es necesario */
+.tailwind-table th,
+.tailwind-table td {
+  padding: 0.5rem 1rem;
+}

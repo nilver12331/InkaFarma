@@ -16,3 +16,8 @@ toggleSidebarTop.addEventListener("click", () => {
     sidebar.classList.toggle("hidden");
   }
 });
+
+function toggleSubmenu() {
+  const submenu = document.getElementById('submenu-productos');
+  submenu.classList.toggle('hidden');
+}

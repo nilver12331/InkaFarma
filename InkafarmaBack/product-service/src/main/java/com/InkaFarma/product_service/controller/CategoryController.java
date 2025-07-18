@@ -50,9 +50,10 @@ public class CategoryController {
         }
     }
 
-    // Eliminar
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarCategoria(@PathVariable Integer id) {
+
+    //Elimicion logico
+    @PutMapping("/{id}/desactivar")
+    public ResponseEntity<Void> desactivarCategoria(@PathVariable Integer id) {
         try {
             categoryService.eliminarCategoria(id);
             return ResponseEntity.noContent().build();

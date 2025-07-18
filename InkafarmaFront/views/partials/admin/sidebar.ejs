@@ -1,22 +1,47 @@
-<aside id="sidebar" class="bg-white w-64 shadow-md transition-all duration-300 hidden lg:block">
+<aside id="sidebar" class="bg-slate-800 text-slate-100 border-r border-slate-700 w-64 shadow-md transition-all duration-300 hidden lg:block">
   <div class="p-4 flex items-center justify-between border-b">
-    <span class="text-xl font-bold text-green-600">
-      Inka<span class="text-black sidebar-text">farma</span>
+    <span class="text-xl font-bold">
+      Inka<span class="sidebar-text text-gray-200">farma</span>
     </span>
   </div>
 
-  <nav class="flex flex-col gap-2 p-4 text-sm">
-    <a href="#" class="flex items-center gap-3 p-2 hover:bg-gray-100 rounded">
-      <i class="fa-solid fa-table-columns"></i> <span class="sidebar-text">Dashboard</span>
-    </a>
-    <a href="#" class="flex items-center gap-3 p-2 hover:bg-gray-100 rounded">
-      <i class="fa-solid fa-box"></i> <span class="sidebar-text">Productos</span>
-    </a>
-    <a href="/clientes" class="flex items-center gap-3 p-2 hover:bg-gray-100 rounded">
-      <i class="fa-solid fa-users"></i> <span class="sidebar-text">Clientes</span>
-    </a>
-    <a href="#" class="flex items-center gap-3 p-2 hover:bg-gray-100 rounded">
-      <i class="fa-solid fa-gear"></i> <span class="sidebar-text">Configuración</span>
-    </a>
+  <nav class="p-2 text-sm">
+    <ul class="flex flex-col gap-2">
+      <li>
+        <a href="#" class="flex items-center gap-3 p-2 hover:bg-slate-700  rounded transition">
+          <i class="fa-solid fa-table-columns "></i> <span class="sidebar-text">Dashboard</span>
+        </a>
+      </li>
+
+      <li>
+        <button onclick="toggleSubmenu()" class="flex items-center justify-between p-2 hover:bg-slate-700 transition rounded w-full">
+          <div class="flex items-center gap-3">
+            <i class="fa-solid fa-box"></i> <span class="sidebar-text">Inventario</span>
+          </div>
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+
+        <ul id="submenu-productos" class="ml-8 mt-1 flex flex-col gap-1 hidden">
+          <li>
+            <a href="/admin/categoria" class="p-2 hover:bg-slate-700 transition  rounded block">Categorías</a>
+          </li>
+          <li>
+            <a href="/admin/atributo" class="p-2 hover:bg-slate-700 transition  rounded block">Categoria Atributo</a>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="/admin/cliente" class="flex items-center gap-3 p-2 hover:bg-slate-700 transition rounded">
+          <i class="fa-solid fa-users"></i> <span class="sidebar-text">Clientes</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="#" class="flex items-center gap-3 p-2 hover:bg-slate-700 transition rounded">
+          <i class="fa-solid fa-gear"></i> <span class="sidebar-text">Configuración</span>
+        </a>
+      </li>
+    </ul>
   </nav>
 </aside>
