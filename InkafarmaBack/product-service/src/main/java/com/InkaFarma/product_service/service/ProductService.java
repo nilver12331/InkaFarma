@@ -33,7 +33,8 @@ public class ProductService {
         producto.setPrecio(precio);
         producto.setStock(stock);
         producto.setActivo(activo);
-
+        // IMPRIME la ruta absoluta donde se guardará
+        System.out.println(Paths.get("uploads").toAbsolutePath());
         Categoria categoria = categoriaRepository.findById(idCategoria)
                 .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
         producto.setCategoria(categoria);
@@ -49,9 +50,9 @@ public class ProductService {
                     Files.write(ruta, archivo.getBytes());
 
                     ImagenProducto imagen = new ImagenProducto();
-                    imagen.setUrlimagen(ruta.toString());
+                    imagen.setUrlimagen(nombreArchivo); // Solo guarda el nombre del archivo
                     imagen.setProducto(producto);
-                    imagen.setEsPrincipal(false); // o lógica para marcar una como principal
+                    imagen.setEsPrincipal(false); // Puedes definir cuál es principal
 
                     listaImagenes.add(imagen);
 
@@ -135,5 +136,8 @@ public class ProductService {
         }
 
         productoRepository.save(producto);
+    }
+    public List<Producto> listarProductos(){
+        return productoRepository.findByActivoTrue();
     }
 }

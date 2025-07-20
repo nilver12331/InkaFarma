@@ -1,5 +1,6 @@
 package com.InkaFarma.catalog_service.service;
 
+import com.InkaFarma.catalog_service.dto.Producto;
 import com.InkaFarma.catalog_service.dto.ProductoAtributo;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -21,6 +22,14 @@ public class ProductoCatalogService {
                 .uri("/api/producto-atributo/producto/" + idProducto)
                 .retrieve()
                 .bodyToFlux(ProductoAtributo.class)
+                .collectList()
+                .block();
+    }
+    public List<Producto> obtenerListProducto(){
+        return webClient.get()
+                .uri("/api/productos")
+                .retrieve()
+                .bodyToFlux(Producto.class)
                 .collectList()
                 .block();
     }

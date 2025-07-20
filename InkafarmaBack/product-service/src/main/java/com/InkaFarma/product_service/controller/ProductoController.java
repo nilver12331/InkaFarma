@@ -1,5 +1,6 @@
 package com.InkaFarma.product_service.controller;
 
+import com.InkaFarma.product_service.entity.Categoria;
 import com.InkaFarma.product_service.entity.Producto;
 import com.InkaFarma.product_service.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/productos")
 public class ProductoController {
@@ -14,6 +18,12 @@ public class ProductoController {
     private final ProductService productoService;
     public ProductoController(ProductService productoService) {
         this.productoService = productoService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Producto>> listarProductos(){
+        List<Producto> productos=productoService.listarProductos();
+        return ResponseEntity.ok(productos);
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

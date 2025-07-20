@@ -40,6 +40,7 @@ public class CarritoService {
             return carritoRepository.save(nuevo);
         }
     }
+
     /*Agregar un item en mi lista de mi carrito*/
     public Carrito agregarProducto(Integer idCliente, CarritoItem item) {
         Carrito carrito = obtenerCarritoUsuario(idCliente);
@@ -55,6 +56,30 @@ public class CarritoService {
         } else {
             item.setCarrito(carrito);
             carrito.getItems().add(carritoItemRepository.save(item));
+        }
+
+        return carritoRepository.save(carrito);
+    }
+
+    public Carrito quitarProducto(Integer idCliente, Long idProducto) {
+        Carrito carrito = obtenerCarritoUsuario(idCliente);
+
+        Optional<CarritoItem> itemExistente = carrito.getItems().stream()
+                .filter(i -> i.getIdProducto().equals(idProducto))
+                .findFirst();
+
+        if (itemExistente.isPresent()) {
+            CarritoItem existente = itemExistente.get();
+            int nuevaCantidad = existente.getCantidad() - 1;
+
+            if (nuevaCantidad > 0) {
+                existente.setCantidad(nuevaCantidad);
+                carritoItemRepository.save(existente);
+            } else {
+                // Eliminar el ítem si la cantidad llega a 0
+                carrito.getItems().remove(existente);
+                carritoItemRepository.delete(existente);
+            }
         }
 
         return carritoRepository.save(carrito);

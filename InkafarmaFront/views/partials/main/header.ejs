@@ -46,15 +46,18 @@
                     </a>
                 </div>
                 <!-- Input de búsqueda -->
-                <div class="w-full sm:w-2/3">
+                <div class="relative w-full max-w-md mx-auto">
+                  
                     <div class="input-group">
-                        <input type="text"
-                            class="form-control rounded-15 pl-4 pr-10 py-3 text-sm focus:outline-none focus:shadow-none"
-                            placeholder="Buscar una marca o producto" />
-                        <span class="input-group-text bgVerdeI border-0 pe-3">
+                    <input type="text" id="buscadorPro" placeholder="Buscar productos..."
+                        class="form-control rounded-15 pl-4 pr-10 py-3 text-sm focus:outline-none focus:shadow-none"
+                        onclick="abrirBuscador()"/>
+                         <span class="input-group-text bgVerdeI border-0 pe-3">
                             <i class="fa-solid fa-magnifying-glass text-white"></i>
                         </span>
                     </div>
+                     
+                  
                 </div>
             </div>
             <!-- Navegador Lateral superior-->
@@ -71,39 +74,28 @@
                         <span>Mis pedidos</span>
                     </div>
                 </a>
-                <a href="#" class="colorText-1" id="IniciarSesion">
-                    <div>
-                        <i class="fa-solid fa-bag-shopping"></i>
-                        <span>Inicia Sesión</span>
-                    </div>
-                </a>
-                <div class="colorText-2 bgCelesteBajo p-2 rounded">
-                    <i class="fa-solid fa-cart-shopping "></i>
-                    <span>0</span>
+                <div class="colorText-1" id="IniciarSesion">
+
+                </div>
+                <div>
+                    <button onclick="document.getElementById('carritoModal').showModal()" class="colorText-2 bgCelesteBajo text-blue px-4 py-2 rounded">
+                            <i class="fa-solid fa-cart-shopping "></i> <span class="totalCarrito">0</span>
+                    </button>
                 </div>
             </div>
-
         </div>
         <div>
             <!--Navegador Inferior-->
             <nav class="container d-flex items-center justify-center gap-4 pt-2">
-                <div class="relative group inline-block py-2" id="dropdown">
+                <div class="relative group inline-block py-2" id="dropdownCategoria">
                     <!-- Botón de categorías -->
                     <div class="px-4 pb-2 pt-1 rounded-md my-0 underline-hover relative">
                         <span>Categorías</span>
-                        <i class="fa-solid fa-chevron-down"></i>
+                        <i class="fa-solid fa-chevron-down text-green-500"></i>
                     </div>
                     <!-- Menú desplegable -->
-                    <div id="menu" class="absolute  hidden w-64 bg-white rounded-xl shadow-lg z-50 my-0">
-                        <ul class="py-2 text-sm text-gray-700">
-                            <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Cupones Promocionales</li>
-                            <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Inka Packs</li>
-                            <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Salud</li>
-                            <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Productos Naturales</li>
-                            <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Nutrición para Todos</li>
-                            <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Mamá y Bebé</li>
-                            <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Perú Pasión</li>
-                        </ul>
+                    <div id="menucategoria" class="absolute  hidden w-64 bg-white rounded-xl shadow-lg z-50 my-0">
+
                     </div>
                 </div>
                 <a href="#">
@@ -139,3 +131,162 @@
             </nav>
         </div>
 </header>
+
+
+<!-- Dialog del carrito -->
+<dialog id="carritoModal" class="w-full max-w-md h-full p-0 rounded-none shadow-xl open:flex flex-col overflow-y-auto z-50">
+  <!-- Encabezado -->
+  <div class="flex justify-between items-center p-4 border-b">
+    <h2 class="text-lg font-bold">Mi carrito</h2>
+    <button onclick="document.getElementById('carritoModal').close()" class="text-2xl font-light">&times;</button>
+  </div>
+
+  <!-- Proveedor: Inkafarma -->
+  <div class="p-4 border-b">
+    <h3 class="font-semibold text-sm text-gray-700 mb-2">Inkafarma (1)</h3>
+    <div class="flex items-start gap-3">
+      <img src="/img/rexona1.png" class="w-16 h-16 object-contain rounded" />
+      <div class="flex-1 text-sm text-gray-800">
+        <p>Pack Toallas Húmedas Ninet</p>
+        <p class="text-xs text-gray-500">SUPER PACK</p>
+        <p class="text-xs mt-1">CANTIDAD: 1</p>
+      </div>
+      <div class="text-right">
+        <p class="text-sm line-through text-gray-400">S/ 21.80</p>
+        <p class="text-red-600 font-semibold">S/ 13.90</p>
+        <button class="text-sm text-red-500 mt-1">Eliminar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Proveedor: Cc.com -->
+  <div class="p-4 border-b">
+    <h3 class="font-semibold text-sm text-gray-700 mb-2">Cc.com (1)</h3>
+    <div class="flex items-start gap-3">
+      <img src="/img/rexona1.png" class="w-16 h-16 object-contain rounded" />
+      <div class="flex-1 text-sm text-gray-800">
+        <p>Bolso deportivo Multiuso Expandible...</p>
+        <p class="text-xs text-gray-500">UN 1 UN</p>
+        <p class="text-xs mt-1">CANTIDAD: 0</p>
+      </div>
+      <div class="text-right">
+        <p class="text-gray-800 font-semibold">S/ 59.90</p>
+        <button class="text-sm text-red-500 mt-1">Eliminar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Totales -->
+  <div class="p-4 space-y-2">
+    <div class="flex justify-between text-sm">
+      <span>Subtotal</span>
+      <span>S/ 74.80</span>
+    </div>
+    <div class="flex justify-between text-sm text-red-600 font-semibold">
+      <span>Exclusivo oh! y oh! pay</span>
+      <span>S/ 73.80</span>
+    </div>
+  </div>
+
+  <!-- Acciones -->
+  <div class="px-4 pb-6">
+    <div class="flex justify-between gap-4">
+      <a href="/carrito" class="text-blue-600 text-sm underline">Ir a mi carrito</a>
+      <button class="bg-green-600 hover:bg-green-700 text-white text-sm px-5 py-2 rounded-full transition">
+        Comprar ahora
+      </button>
+    </div>
+  </div>
+</dialog>
+
+
+
+<!-- Fondo semi-transparente (overlay realista) -->
+<div id="buscadorOverlay"
+     class="fixed inset-0 bg-gray-900 bg-opacity-30 transition-opacity duration-300 hidden z-40"></div>
+<!-- Buscador centrado -->
+<div id="modalBuscador"
+     class="fixed top-20 left-1/2 transform -translate-x-1/2 w-full max-w-3xl z-50 hidden transition-all duration-300 ease-in-out">
+  <div class="bg-white rounded-lg shadow-xl p-6">
+    <div class="flex items-center gap-2">
+      <input type="text" id="buscadorModal" placeholder="Buscar productos..."
+             class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+             oninput="buscarProducto()" />
+      <button onclick="cerrarBuscador()" class="pl-2">
+        <i class="fa-solid fa-xmark text-2xl text-gray-600 hover:text-red-500"></i>
+      </button>
+    </div>
+    <div id="dropdownResultadosCategoria"
+         class="mt-4 max-h-80 overflow-y-auto border border-gray-200 rounded-md shadow hidden bg-white">
+    </div>
+  </div>
+</div>
+
+
+<div id="modalLoginRegistro" class="fixed inset-0 z-50 hidden bg-black/50 flex items-center justify-center">
+    <div class="bg-white w-full max-w-md rounded-xl p-6 relative shadow-lg">
+
+        <!-- Botón de cierre -->
+        <button onclick="document.getElementById('modalLoginRegistro').classList.add('hidden')"
+            class="absolute top-3 right-3 text-gray-500 hover:text-red-500 text-xl font-bold">
+            ✕
+        </button>
+
+        <!-- Tabs -->
+        <div class="flex justify-between mb-4 border-b border-gray-200">
+            <button id="tab-login"
+                class="w-1/2 py-2 text-center font-semibold text-green-700 border-b-2 border-green-600"
+                onclick="showTab('login')">
+                INICIAR SESIÓN
+            </button>
+            <button id="tab-register" class="w-1/2 py-2 text-center font-semibold text-gray-500 hover:text-green-600"
+                onclick="showTab('register')">
+                REGÍSTRATE
+            </button>
+        </div>
+
+        <!-- Logo -->
+        <div class="flex justify-center mb-4">
+            <img src="/img/logo_inkafarma.png" alt="Inkafarma" class="w-1/2" />
+        </div>
+
+        <!-- Login -->
+        <div id="login-tab" class="space-y-4">
+            <div class="flex items-center border rounded-lg px-3 py-2">
+                <i class="fa-solid fa-envelope text-gray-400 mr-2"></i>
+                <input type="text" class="w-full outline-none" placeholder="Usuario" id="usuarioInput" />
+            </div>
+            <div class="flex items-center border rounded-lg px-3 py-2">
+                <i class="fa-solid fa-lock text-gray-400 mr-2"></i>
+                <input type="password" class="w-full outline-none" placeholder="Contraseña" id="claveInput" />
+            </div>
+            <button class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-semibold"
+                id="btnLogin">INGRESAR</button>
+        </div>
+
+        <!-- Registro -->
+        <div id="register-tab" class="space-y-4 hidden">
+            <div class="flex items-center border rounded-lg px-3 py-2">
+                <i class="fa-solid fa-user text-gray-400 mr-2"></i>
+                <input type="text" class="w-full outline-none" placeholder="Nombres" />
+            </div>
+            <div class="flex items-center border rounded-lg px-3 py-2">
+                <i class="fa-solid fa-envelope text-gray-400 mr-2"></i>
+                <input type="email" class="w-full outline-none" placeholder="Correo electrónico" />
+            </div>
+            <div class="flex items-center border rounded-lg px-3 py-2">
+                <i class="fa-solid fa-phone text-gray-400 mr-2"></i>
+                <input type="text" class="w-full outline-none" placeholder="Celular" />
+            </div>
+            <div class="flex items-center border rounded-lg px-3 py-2">
+                <i class="fa-solid fa-lock text-gray-400 mr-2"></i>
+                <input type="password" class="w-full outline-none" placeholder="Contraseña" />
+            </div>
+            <button class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-semibold">REGISTRAR
+                USUARIO</button>
+        </div>
+    </div>
+</div>
+
+<!--Toast-->
+<div id="toast" class="hidden fixed bottom-5 right-5 bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-2 rounded shadow z-50"></div>

@@ -6,4 +6,8 @@ router.get('/', (req, res) => {
   res.render('ventas/home');
 });
 
+router.get('/catalog', (req, res) => {
+  res.render('ventas/catalog');
+});
+
 module.exports = router; 

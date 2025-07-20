@@ -1,5 +1,6 @@
 package com.InkaFarma.catalog_service.controller;
 
+import com.InkaFarma.catalog_service.dto.Producto;
 import com.InkaFarma.catalog_service.dto.ProductoAtributo;
 import com.InkaFarma.catalog_service.service.ProductoCatalogService;
 import org.springframework.http.ResponseEntity;
@@ -22,4 +23,10 @@ public class ProductoCatalogController {
         List<ProductoAtributo> atributos = productoCatalogService.obtenerAtributosDeProducto(idProducto);
         return ResponseEntity.ok(atributos);
     }
+    @GetMapping("/productos")
+    public ResponseEntity<List<Producto>> obtenerProductos() {
+        List<Producto> productos = productoCatalogService.obtenerListProducto();
+        return ResponseEntity.ok(productos);
+    }
+
 }
