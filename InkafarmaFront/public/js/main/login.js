@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', app)
 function app() {
   const btnLogin = document.querySelector('#btnLogin');
   btnLogin.addEventListener('click', iniciarSesion);
+  
   mostrarHtml();
 }
 
@@ -13,7 +14,7 @@ function mostrarHtml() {
   const usuario = JSON.parse(localStorage.getItem('usuario'));
   if (usuario && usuario.idCliente && !isNaN(usuario.idCliente) && usuario.idCliente > 0) {
     divIniciarSesion.classList.add('relative', 'inline-block', 'text-left');
-    console.log(usuario);
+    
     const { nombre, apellidoPaterno, apellidoMaterno } = usuario;
     divIniciarSesion.innerHTML = `  <button id="userMenuButton" type="button"
                                         class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -81,7 +82,7 @@ async function iniciarSesion() {
     localStorage.setItem('usuario', JSON.stringify(data));
     document.getElementById('modalLoginRegistro').classList.add('hidden');
     mostrarHtml();
-    console.log('Bienvenida', data.nombre);
+    mostrarToast('Bienvenida', data.nombre);
 
   } catch (error) {
     alert(`Error al iniciar sesión: ${error.message}`);
@@ -117,3 +118,11 @@ function showTab(tab) {
   }
 
 
+function mostrarToast(mensaje) {
+    const toast = document.getElementById('toast');
+    toast.textContent = mensaje;
+    toast.classList.remove('hidden');
+    setTimeout(() => {
+        toast.classList.add('hidden');
+    }, 3000); // Oculta después de 3 segundos
+}

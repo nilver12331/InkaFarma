@@ -23,7 +23,7 @@ async function obtenerCategorias() {
             mostrarHtmlCategoria();
 
         } else {
-            console.log('No tiene categorías creadas');
+            mostrarToast('No tiene categorías creadas');
         }
     } catch (error) {
         console.error("Hubo un problema al obtener los datos: ", error);
@@ -165,14 +165,12 @@ function mostrarModalEditar(idCategoria) {
     nuevoForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const nombre = nombreEditar.value.trim();
-        console.log(nombre);
         if (!nombre) {
             mostrarToast("El nombre es obligatorio");
             return;
         }
         try {
             categoriaSeleccionada.nombre = nombre;
-            console.log(categoriaSeleccionada);
             const response = await fetch(`http://localhost:8080/api/category/${idCategoria}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },

@@ -41,3 +41,105 @@
 .underline-hover:hover::after {
   width: 100%;
 }
+
+/* Footer*/
+
+.services-section {
+    text-align: center;
+    padding: 40px 0;
+    background-color: #f0f3f6;
+    color: #333;
+}
+
+.services-section h2 {
+    color: #2b396b;
+    margin-bottom: 40px;cd
+    font-size: 2.2em;
+    font-weight: 600;
+}
+
+.services-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.service-block {
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    padding: 30px;
+    width: 250px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.service-block:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+}
+
+.service-block img {
+    width: 100px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.service-block h3 {
+    color: #2b396b;
+    font-size: 1.4em;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.service-block p {
+    font-size: 0.95em;
+    line-height: 1.5;
+    color: #555;
+}
+
+.service-block p .phone-number {
+    color: #38a169;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.service-block p .phone-number:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 992px) {
+    .service-block {
+        width: 45%;
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .services-section h2 {
+        font-size: 1.8em;
+    }
+    .services-container {
+        gap: 20px;
+    }
+    .service-block {
+        width: 80%;
+        padding: 25px;
+    }
+    .service-block img {
+        width: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    .service{
+       text-align: center; 
+    }
+}

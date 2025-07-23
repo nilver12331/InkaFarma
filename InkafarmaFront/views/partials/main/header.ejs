@@ -47,7 +47,6 @@
                 </div>
                 <!-- Input de búsqueda -->
                 <div class="relative w-full max-w-md mx-auto">
-                  
                     <div class="input-group">
                     <input type="text" id="buscadorPro" placeholder="Buscar productos..."
                         class="form-control rounded-15 pl-4 pr-10 py-3 text-sm focus:outline-none focus:shadow-none"
@@ -55,17 +54,15 @@
                          <span class="input-group-text bgVerdeI border-0 pe-3">
                             <i class="fa-solid fa-magnifying-glass text-white"></i>
                         </span>
-                    </div>
-                     
-                  
+                    </div>  
                 </div>
             </div>
             <!-- Navegador Lateral superior-->
             <div class="w-full md:w-1/2 flex flex-col gap-3 sm:flex-row gap-4 sm:justify-end sm:pr-3 items-center">
-                <a href="#" class="colorText-1">
+                <a href="#" class="colorText-1" onclick="abrirModalListDireccion(event)">
                     <div>
                         <i class="fa-solid fa-location-dot"></i>
-                        <span>Ingresa tu dirección de entrega</span>
+                        <span>Mis direcciones</span>
                     </div>
                 </a>
                 <a href="#" class="colorText-1">
@@ -78,11 +75,12 @@
 
                 </div>
                 <div>
-                    <button onclick="document.getElementById('carritoModal').showModal()" class="colorText-2 bgCelesteBajo text-blue px-4 py-2 rounded">
+                    <button onclick="mostrarCarrito(event)" class="colorText-2 bgCelesteBajo text-blue px-4 py-2 rounded">
                             <i class="fa-solid fa-cart-shopping "></i> <span class="totalCarrito">0</span>
                     </button>
                 </div>
             </div>
+
         </div>
         <div>
             <!--Navegador Inferior-->
@@ -135,68 +133,7 @@
 
 <!-- Dialog del carrito -->
 <dialog id="carritoModal" class="w-full max-w-md h-full p-0 rounded-none shadow-xl open:flex flex-col overflow-y-auto z-50">
-  <!-- Encabezado -->
-  <div class="flex justify-between items-center p-4 border-b">
-    <h2 class="text-lg font-bold">Mi carrito</h2>
-    <button onclick="document.getElementById('carritoModal').close()" class="text-2xl font-light">&times;</button>
-  </div>
-
-  <!-- Proveedor: Inkafarma -->
-  <div class="p-4 border-b">
-    <h3 class="font-semibold text-sm text-gray-700 mb-2">Inkafarma (1)</h3>
-    <div class="flex items-start gap-3">
-      <img src="/img/rexona1.png" class="w-16 h-16 object-contain rounded" />
-      <div class="flex-1 text-sm text-gray-800">
-        <p>Pack Toallas Húmedas Ninet</p>
-        <p class="text-xs text-gray-500">SUPER PACK</p>
-        <p class="text-xs mt-1">CANTIDAD: 1</p>
-      </div>
-      <div class="text-right">
-        <p class="text-sm line-through text-gray-400">S/ 21.80</p>
-        <p class="text-red-600 font-semibold">S/ 13.90</p>
-        <button class="text-sm text-red-500 mt-1">Eliminar</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Proveedor: Cc.com -->
-  <div class="p-4 border-b">
-    <h3 class="font-semibold text-sm text-gray-700 mb-2">Cc.com (1)</h3>
-    <div class="flex items-start gap-3">
-      <img src="/img/rexona1.png" class="w-16 h-16 object-contain rounded" />
-      <div class="flex-1 text-sm text-gray-800">
-        <p>Bolso deportivo Multiuso Expandible...</p>
-        <p class="text-xs text-gray-500">UN 1 UN</p>
-        <p class="text-xs mt-1">CANTIDAD: 0</p>
-      </div>
-      <div class="text-right">
-        <p class="text-gray-800 font-semibold">S/ 59.90</p>
-        <button class="text-sm text-red-500 mt-1">Eliminar</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Totales -->
-  <div class="p-4 space-y-2">
-    <div class="flex justify-between text-sm">
-      <span>Subtotal</span>
-      <span>S/ 74.80</span>
-    </div>
-    <div class="flex justify-between text-sm text-red-600 font-semibold">
-      <span>Exclusivo oh! y oh! pay</span>
-      <span>S/ 73.80</span>
-    </div>
-  </div>
-
-  <!-- Acciones -->
-  <div class="px-4 pb-6">
-    <div class="flex justify-between gap-4">
-      <a href="/carrito" class="text-blue-600 text-sm underline">Ir a mi carrito</a>
-      <button class="bg-green-600 hover:bg-green-700 text-white text-sm px-5 py-2 rounded-full transition">
-        Comprar ahora
-      </button>
-    </div>
-  </div>
+  
 </dialog>
 
 
@@ -286,6 +223,104 @@
                 USUARIO</button>
         </div>
     </div>
+</div>
+
+<!--Buscador dirección-->
+<!-- Overlay + Modal -->
+
+
+<div id="overlayDireccion" class="fixed inset-0 bg-black bg-opacity-50 hidden z-[60]"></div>
+
+<div id="modalDireccion" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-lg w-full max-w-md hidden z-[60]">
+  <div class="bg-white w-full max-w-md rounded-xl p-6 relative shadow-lg">
+    <button onclick="cerrarModalAgregarDireccion()" class="absolute top-3 right-4 text-gray-500 hover:text-black text-3xl font-bold">&times;</button>
+
+    <h2 class="text-xl font-bold mb-4"> <i class="fas fa-map-marker-alt text-red-500 text-xl"></i> Agregar dirección</h2>
+                <input
+                id="autocomplete"
+                type="text"
+                placeholder="Escribe una dirección..."
+                class="
+                border border-gray-300 w-full p-3 rounded-md shadow-sm focus:ring-1 focus:ring-green-500 focus:border-green-500 focus:outline-none transition"
+                />
+
+                <!-- Resultado -->
+                <div
+                id="output"
+                class="
+                
+                mt-4 p-4 bg-gray-50 border border-gray-200 rounded-md shadow-sm text-gray-700 text-sm leading-relaxed"
+                ></div>
+      
+        <!-- REFERENCIA -->
+            <div class="py-2 pt-4">
+                <p>Piso, Puerta o Referencia</p>
+            </div>
+            <input type="text" id="referencia"
+            class="w-full border p-3 rounded mt-3 border border-gray-300 shadow-sm focus:ring-1 focus:ring-green-500 focus:border-green-500 focus:outline-none transition"
+            placeholder="Ej: Entre Av. Colonial y Av. Venezuela" />
+
+
+    <div class="flex gap-2 mt-4">
+      <label class="flex-1">
+        <input type="radio" name="tipo" value="casa" class="hidden peer" checked>
+        <div class="p-3 border rounded text-center peer-checked:border-green-600 peer-checked:bg-green-100 cursor-pointer">
+          🏠 Mi casa
+        </div>
+      </label>
+      <label class="flex-1">
+        <input type="radio" name="tipo" value="trabajo" class="hidden peer">
+        <div class="p-3 border rounded text-center peer-checked:border-green-600 peer-checked:bg-green-100 cursor-pointer">
+          🏢 Trabajo
+        </div>
+      </label>
+      <label class="flex-1">
+        <input type="radio" name="tipo" value="otros" class="hidden peer">
+        <div class="p-3 border rounded text-center peer-checked:border-green-600 peer-checked:bg-green-100 cursor-pointer">
+          📍 Otros
+        </div>
+      </label>
+    </div>
+
+    <button onclick="validarDireccion(event)" class="mt-4 w-full bg-green-600 text-white py-2 rounded">
+      Guardar dirección
+    </button>
+  </div>
+</div>
+
+
+<!--Modal de Mis direcciones-->
+<div id="modalListDirecciones" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white w-full max-w-2xl rounded-2xl shadow-lg p-6">
+    <!-- Encabezado -->
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center gap-2">
+        <i class="fas fa-map-marker-alt text-green-600 text-xl"></i>
+        <h2 class="text-xl font-semibold text-gray-800">Mis direcciones</h2>
+      </div>
+      <button onclick="cerrarModalListDireccion()" class="text-gray-400 hover:text-gray-600 text-xl">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Link agregar nueva dirección -->
+    <div class="mb-4">
+      <a href="#" class="text-sm text-blue-600 hover:underline" onclick="abrirModalAgregarDireccion(event)">Agregar nueva dirección</a>
+    </div>
+
+    <!-- Dirección -->
+        <div id="resultadoDirecciones">
+
+        </div>
+
+    <!-- Acciones -->
+    <div class="flex justify-between mt-6">
+      <button onclick="cerrarModalListDireccion()" class="text-blue-600 font-semibold hover:underline">Cancelar</button>
+      <button class="bg-green-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-700 transition">
+        Elegir dirección
+      </button>
+    </div>
+  </div>
 </div>
 
 <!--Toast-->
