@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ValorAtributoRepository extends JpaRepository<ValorAtributo, Integer> {
-    List<ValorAtributo> findByAtributo_IdAtributo(int idAtributo);
+    List<ValorAtributo> findByAtributoCategoria_Atributo_IdAtributo(int id);
 }

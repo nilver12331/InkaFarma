@@ -1,5 +1,7 @@
 package com.InkaFarma.product_service.service;
 
+import com.InkaFarma.product_service.dto.ProductoConAtributosDTO;
+import com.InkaFarma.product_service.dto.ProductoMapper;
 import com.InkaFarma.product_service.entity.Categoria;
 import com.InkaFarma.product_service.entity.ImagenProducto;
 import com.InkaFarma.product_service.entity.Producto;
@@ -15,8 +17,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -24,14 +28,15 @@ public class ProductService {
     private ProductoRepository productoRepository;
     @Autowired
     private CategoriaRepository categoriaRepository;
-    public void registrarProducto(String nombre, String descripcion, double precio, int stock, boolean activo,
+    @Autowired
+    private ProductoMapper productoMapper;
+    public void registrarProducto(String nombre, String descripcion, double precio, boolean activo,
                                   int idCategoria, MultipartFile[] imagenes) {
 
         Producto producto = new Producto();
         producto.setNombre(nombre);
         producto.setDescripcion(descripcion);
         producto.setPrecio(precio);
-        producto.setStock(stock);
         producto.setActivo(activo);
         // IMPRIME la ruta absoluta donde se guardará
         System.out.println(Paths.get("uploads").toAbsolutePath());
@@ -73,12 +78,15 @@ public class ProductService {
         producto.setActivo(nuevoEstado);
         return productoRepository.save(producto);
     }
-    public Producto obtenerProductoPorId(int idProducto) {
-        return productoRepository.findById(idProducto)
+
+
+    public ProductoConAtributosDTO obtenerProductoPorId(int idProducto) {
+        Producto producto = productoRepository.findById(idProducto)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+        return productoMapper.mapearProducto(producto);
     }
 
-    public Producto editarProducto(int idProducto, String nombre, String descripcion, double precio, int stock,
+    public Producto editarProducto(int idProducto, String nombre, String descripcion, double precio,
                                    boolean activo, int idCategoria, MultipartFile[] nuevasImagenes) {
 
         Producto producto = productoRepository.findById(idProducto)
@@ -87,7 +95,6 @@ public class ProductService {
         producto.setNombre(nombre);
         producto.setDescripcion(descripcion);
         producto.setPrecio(precio);
-        producto.setStock(stock);
         producto.setActivo(activo);
 
         Categoria categoria = categoriaRepository.findById(idCategoria)
@@ -137,7 +144,19 @@ public class ProductService {
 
         productoRepository.save(producto);
     }
-    public List<Producto> listarProductos(){
-        return productoRepository.findByActivoTrue();
+    public List<ProductoConAtributosDTO> listarProductos(){
+        List<Producto> productos=productoRepository.findByActivoTrue();
+        return productos.stream()
+                .map(productoMapper::mapearProducto) // correcto: referencia al método
+                .collect(Collectors.toList());
+    }
+
+    public List<ProductoConAtributosDTO> listarProductosPorIds(List<Integer> ids) {
+        if (ids == null || ids.isEmpty()) return Collections.emptyList();
+
+        List<Producto> productos = productoRepository.findByIdProductoInAndActivoTrue(ids);
+        return productos.stream()
+                .map(productoMapper::mapearProducto)
+                .collect(Collectors.toList());
     }
 }

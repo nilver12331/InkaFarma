@@ -1,5 +1,6 @@
 package com.InkaFarma.product_service.controller;
 
+import com.InkaFarma.product_service.dto.ProductoConAtributosDTO;
 import com.InkaFarma.product_service.entity.Categoria;
 import com.InkaFarma.product_service.entity.Producto;
 import com.InkaFarma.product_service.service.ProductService;
@@ -21,9 +22,9 @@ public class ProductoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Producto>> listarProductos(){
-        List<Producto> productos=productoService.listarProductos();
-        return ResponseEntity.ok(productos);
+    public ResponseEntity<List<ProductoConAtributosDTO>> listarProductos(){
+        List<ProductoConAtributosDTO> productosDTO=productoService.listarProductos();
+        return ResponseEntity.ok(productosDTO);
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -31,12 +32,11 @@ public class ProductoController {
             @RequestParam("nombre") String nombre,
             @RequestParam("descripcion") String descripcion,
             @RequestParam("precio") double precio,
-            @RequestParam("stock") int stock,
             @RequestParam("activo") boolean activo,
             @RequestParam("idCategoria") int idCategoria,
             @RequestParam("imagenes") MultipartFile[] imagenes
     ) {
-        productoService.registrarProducto(nombre, descripcion, precio, stock, activo, idCategoria, imagenes);
+        productoService.registrarProducto(nombre, descripcion, precio, activo, idCategoria, imagenes);
         return ResponseEntity.ok("Producto registrado exitosamente.");
     }
 
@@ -47,21 +47,20 @@ public class ProductoController {
             @RequestParam String nombre,
             @RequestParam String descripcion,
             @RequestParam double precio,
-            @RequestParam int stock,
             @RequestParam boolean activo,
             @RequestParam int idCategoria,
             @RequestParam(value = "imagenes", required = false) MultipartFile[] imagenes) {
 
-        Producto actualizado = productoService.editarProducto(idProducto, nombre, descripcion, precio, stock, activo, idCategoria, imagenes != null ? imagenes : new MultipartFile[0]);
+        Producto actualizado = productoService.editarProducto(idProducto, nombre, descripcion, precio, activo, idCategoria, imagenes != null ? imagenes : new MultipartFile[0]);
         return ResponseEntity.ok(actualizado);
     }
 
     // Obtener producto por ID
     @GetMapping("/{idProducto}")
-    public ResponseEntity<Producto> obtenerProductoPorId(@PathVariable int idProducto) {
+    public ResponseEntity<ProductoConAtributosDTO> obtenerProductoPorId(@PathVariable int idProducto) {
         try {
-            Producto producto = productoService.obtenerProductoPorId(idProducto);
-            return ResponseEntity.ok(producto);
+            ProductoConAtributosDTO productoDTO = productoService.obtenerProductoPorId(idProducto);
+            return ResponseEntity.ok(productoDTO);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
@@ -86,5 +85,9 @@ public class ProductoController {
         productoService.cambiarImagenPrincipal(idProducto, idImagen);
         return ResponseEntity.noContent().build();
     }
-
+        @PostMapping("/por-ids")
+    public ResponseEntity<List<ProductoConAtributosDTO>> obtenerPorIds(@RequestBody List<Integer> ids) {
+        List<ProductoConAtributosDTO> productos = productoService.listarProductosPorIds(ids);
+        return ResponseEntity.ok(productos);
+    }
 }

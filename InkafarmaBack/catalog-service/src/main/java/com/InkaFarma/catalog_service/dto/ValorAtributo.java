@@ -6,4 +6,5 @@ import lombok.Data;
 public class ValorAtributo {
     private int idValorAtributo;
     private String valor;
+
 }

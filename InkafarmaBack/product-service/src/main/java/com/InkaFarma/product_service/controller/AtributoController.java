@@ -34,8 +34,5 @@ public class AtributoController {
         return atributoService.guardar(atributo);
     }
 
-    @PutMapping("/{id}")
-    public Atributo actualizarAtributo(@PathVariable int id, @RequestBody Atributo atributo) {
-        return atributoService.actualizar(id, atributo);
-    }
+
 }

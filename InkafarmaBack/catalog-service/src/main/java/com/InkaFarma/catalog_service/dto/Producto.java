@@ -7,15 +7,14 @@ import java.util.List;
 public class Producto {
 
     private int idProducto;
-
     private Categoria categoria;
-
     private String nombre;
     private String descripcion;
     private double precio;
-    private int stock;
-
+    private boolean masBuscado;
+    private boolean destacado;
     private boolean activo;
 
     private List<ImagenProducto> imagenProductoList;
+    private List<ProductoAtributo> productoAtributoList;
 }

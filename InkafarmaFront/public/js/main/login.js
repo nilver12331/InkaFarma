@@ -39,6 +39,7 @@ function mostrarHtml() {
                                         </div>
                                     </div>
                                     `;
+    
     const button = document.getElementById('userMenuButton');
     const menu = document.getElementById('userDropdown');
     button.addEventListener('click', () => {

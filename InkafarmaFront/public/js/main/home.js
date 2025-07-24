@@ -1,6 +1,8 @@
 
-document.addEventListener('DOMContentLoaded',appHome);
+
 let listProductosHome=[];
+document.addEventListener('DOMContentLoaded',appHome);
+
 
 function appHome(){
     obtenerProductosHome();  
@@ -27,7 +29,7 @@ async function obtenerProductosHome(){
     mostrarFotroproteccion();
     mostrarInkafit();
   } catch (error) {
-    alert(`Error al iniciar sesión: ${error.message}`);
+    alert(`Error al obter Productos Home: ${error.message}`);
   }
 }
 

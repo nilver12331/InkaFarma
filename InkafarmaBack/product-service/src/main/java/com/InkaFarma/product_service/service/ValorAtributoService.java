@@ -13,7 +13,7 @@ public class ValorAtributoService {
     private ValorAtributoRepository valorAtributoRepository;
 
     public List<ValorAtributo> listarPorAtributo(int idAtributo) {
-        return valorAtributoRepository.findByAtributo_IdAtributo(idAtributo);
+        return valorAtributoRepository.findByAtributoCategoria_Atributo_IdAtributo(idAtributo);
     }
 
     public ValorAtributo guardar(ValorAtributo valorAtributo) {

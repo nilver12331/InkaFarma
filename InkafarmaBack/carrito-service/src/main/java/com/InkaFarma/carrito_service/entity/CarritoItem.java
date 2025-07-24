@@ -22,8 +22,9 @@ public class CarritoItem {
     private Carrito carrito;
     private Long idProducto;
     private String nombreProducto;
-    private double precioUnitario;
+    private double precio;
     private int cantidad;
+    private double descuento;
     @Column(columnDefinition = "TEXT")
     private String urlimagen;
 }

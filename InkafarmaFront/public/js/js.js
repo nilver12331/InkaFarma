@@ -4,6 +4,8 @@ let listProductos = [];
 let carrito = {};
 let listDescuentosHome=[];
 let objDireccion={};
+let listCategoria=[];
+
 /*Buscador de productos*/
 const buscadorPro = document.querySelector('#buscadorPro');
 const modalBuscador = document.querySelector('#modalBuscador');
@@ -30,7 +32,7 @@ async function obtenerDecuentos() {
     const data = await response.json();
     listDescuentosHome=data;
   } catch (error) {
-    alert(`Error al iniciar sesión: ${error.message}`);
+    alert(`Error al obtener descuesto: ${error.message}`);
   }
 }
 /*Obtener Categoras*/
@@ -46,11 +48,11 @@ async function mostrarCategorias() {
     }
 
     const data = await response.json();
-    console.log(data);
+    listCategoria=data;
     mostrarCategoriaHtml(data);
 
   } catch (error) {
-    alert(`Error al iniciar sesión: ${error.message}`);
+    alert(`Error al obtenr categorais: ${error.message}`);
   }
 }
 
@@ -110,7 +112,6 @@ function buscarProducto() {
       const {idProducto,atributos,nombre,precio,imagenes}=producto;
       const imagenProducto = imagenes.find(imagen => imagen.esPrincipal === true);
       const descuentoPro = listDescuentosHome.find(d => d.idProducto === idProducto);
-      console.log(descuentoPro);
       const item = document.createElement('div');
       item.className = 'p-3 hover:bg-gray-100 flex justify-between items-center';
       let StringHtml='';
@@ -207,7 +208,7 @@ async function obtenerProductos() {
     console.log(listProductos);
 
   } catch (error) {
-    alert(`Error al iniciar sesión: ${error.message}`);
+    alert(`Error al obtener producto: ${error.message}`);
   }
 }
 
@@ -227,6 +228,11 @@ async function actualizarTotalCarrito() {
         carrito = await response.json();
         const totalCarrito=document.querySelector('.totalCarrito');
         totalCarrito.textContent=carrito.items.length;
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        const divlistCarrito=document.querySelector('#divlistCarrito');
+        if(divlistCarrito){
+             obtenerProductosId();
+        }  
       } catch (error) {
         alert(`Error al actualizar carrito: ${error.message}`);
       }
@@ -258,7 +264,7 @@ function agregarCarrito(event){
 }
 
 async function agregarItemCarrito(idProducto,idCliente) {
-    const productoCarrito = listProductosHome.find(producto => producto.idProducto == idProducto);
+    const productoCarrito = listProductos.find(producto => producto.idProducto == idProducto);
        
       if(productoCarrito){
           const{idProducto,imagenes,precio,nombre}=productoCarrito;
@@ -310,6 +316,7 @@ async function mostrarCarrito(event){
           throw new Error(errorText);
         }
         carrito = await response.json();
+        listCarrito=carrito;
         mostrarCarritoHTML(carrito);
         
       } catch (error) {
@@ -374,7 +381,8 @@ function mostrarCarritoHTML(carrito){
                       </div>
                       <div class="px-4 pb-6">
                         <div class="flex justify-end gap-4">
-                          <button class="bg-green-600 hover:bg-green-700 text-white text-sm px-5 py-2 rounded-full transition">
+                          <button class="bg-green-600 hover:bg-green-700 text-white text-sm px-5 py-2 rounded-full transition"
+                            onclick="dirigirCarritoDetalle(event)">
                             Comprar ahora
                           </button>
                         </div>
@@ -510,16 +518,16 @@ function mostrarDireccionesHTML(direcciones){
     if(direcciones && direcciones.length>0){
         let stringDirecciones="";
         direcciones.forEach(direccion=>{
-            const {id,tipoDireccion,direccionCompleta}=direccion;
+            const {id,tipoDireccion,direccionCompleta,principal}=direccion;
             stringDirecciones+=`<div class="border rounded-xl p-4 flex justify-between items-center gap-4 hover:shadow">
                               <!-- Radio button -->
                               <div class="w-fit">
-                                  <input type="radio" name="rbDireccion" value="${id}" class="accent-green-600 w-5 h-5 cursor-pointer" />
+                                  <input type="radio" name="rbDireccion" value="${id}" class="accent-green-600 w-5 h-5 cursor-pointer"
+                                      ${principal ? 'checked' : ''} />
                               </div>
-
                               <!-- Dirección -->
                               <div class="flex-1">
-                                  <p class="font-semibold text-gray-800">${tipoDireccion}</p>
+                                  <p class="font-semibold text-gray-800 uppercase">${tipoDireccion}</p>
                                   <p class="text-gray-600 text-sm">${direccionCompleta}</p>
                               </div>
                               <!-- Botón Eliminar -->
@@ -575,12 +583,11 @@ async function validarDireccion(e){
                           nombreZona: data.nombreZona,
                           tiempoEntregaEstimadoMinutos:data.tiempoEntregaEstimadoMinutos,
                           cliente:{
-                            idCliente:cliente.idCliente
+                          idCliente:cliente.idCliente
                           },
                           tipoDireccion:seleccionada.value
-                        };
-
-                      guardarDireccion(objDireccion);
+                            };
+                         guardarDireccion(objDireccion);
                       }else{
                         mostrarToast("La direccion esta fuera de la zona");
                       }
@@ -607,7 +614,8 @@ async function validarDireccion(e){
 
 async function guardarDireccion(objDireccion){
     if(objDireccion){
-       try {
+       console.log(objDireccion);
+        try {
             const response = await fetch(`http://localhost:8080/api/clientes/registrarDireccion`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -617,7 +625,7 @@ async function guardarDireccion(objDireccion){
             const cliente = JSON.parse(localStorage.getItem('usuario'));
             obtenerListDirecciones(cliente);
             cerrarModalAgregarDireccion();
-            mostrarToast('Se agrego al carrito correctamente');
+            mostrarToast('Se guardo correctamente al carrito');
             } catch (err) {
                 console.error(err);
                 mostrarToast('Error al editar la categoría');
@@ -645,4 +653,52 @@ async function eliminarDireccion(e){
         }
 
    }
+}
+
+/*Seleccionar direcciones*/
+async function selectDireccionPrincipal(e){
+    e.preventDefault();
+    const seleccionado = document.querySelector('input[name="rbDireccion"]:checked');
+    if(seleccionado){
+      const valor = seleccionado.value;
+      const cliente = JSON.parse(localStorage.getItem('usuario'));
+      if(cliente){
+          try {
+
+            const response = await fetch(`http://localhost:8080/api/clientes/direccion/principal?idDireccion=${valor}&idCliente=${cliente.idCliente}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+            });
+            if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
+            
+             const divlistCarrito=document.querySelector('#divlistCarrito');
+              if(divlistCarrito){
+                location.reload();
+              }else{
+                  obtenerListDirecciones(cliente);
+                  mostrarToast('Actualización de direccion correctamente');
+              }
+            
+        } catch (err) {
+            console.error(err);
+            mostrarToast('Erro al seleccionar Principal');
+        }
+      }else{
+        mostrarToast('Es necesario tener iniciada la sesion');
+      }
+    }else{
+      mostrarToast('No hay una direccion seleccionada');
+    }
+}
+
+function dirigirCarritoDetalle(e){
+  e.preventDefault();
+  if(carrito){
+     // Guardar en localStorage
+
+    console.log(carrito);
+    window.location.href = "/main/carrito";
+  }else{
+    mostrarToast('Es necesario tener un producto en el carrito');
+  }
 }

@@ -9,5 +9,8 @@ router.get('/', (req, res) => {
 router.get('/catalog', (req, res) => {
   res.render('ventas/catalog');
 });
+router.get('/carrito', (req, res) => {
+  res.render('ventas/carrito');
+});
 
 module.exports = router; 

@@ -11,6 +11,7 @@ import com.InkaFarma.user_service.repository.PersonaRepository;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -27,6 +28,8 @@ public class ClienteService {
     private PersonaRepository personaRepository;
     @Autowired
     private EstadoRepository estadoRepository;
+    @Autowired
+    private DireccionClienteRepository direccionClienteRepository;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
     private static final int ROL_CLIENTE = 1;
@@ -106,8 +109,33 @@ public class ClienteService {
 
         return clienteRepository.save(clienteExistente);
     }
+    /*Obtener direcciones de cliente*/
+    public List<DireccionCliente> obtenerDireccionesPorCliente(Integer idCliente) {
+        return direccionClienteRepository.findByCliente_IdClienteAndActivoTrue(idCliente);
+    }
+    public DireccionCliente guardarDireccion(DireccionCliente direccionCliente) {
+        direccionCliente.setActivo(true);
+        direccionCliente.setPrincipal(false);
+        return direccionClienteRepository.save(direccionCliente);
+    }
+    public boolean desactivarDireccion(Integer idDireccion) {
+        Optional<DireccionCliente> optional = direccionClienteRepository.findById(idDireccion);
+        if (optional.isPresent()) {
+            DireccionCliente direccion = optional.get();
+            direccion.setActivo(false);
+            direccionClienteRepository.save(direccion);
+            return true;
+        }
+        return false;
+    }
 
-
+    @Transactional
+    public void marcarComoPrincipal(Integer idDireccion, Integer idCliente) {
+        // Poner en false todas las direcciones del cliente
+        direccionClienteRepository.marcarTodasNoPrincipales(idCliente);
+        // Poner en true la dirección seleccionada
+        direccionClienteRepository.marcarPrincipalPorId(idDireccion);
+    }
 }
 
 

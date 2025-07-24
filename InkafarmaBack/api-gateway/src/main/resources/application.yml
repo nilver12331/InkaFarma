@@ -34,6 +34,17 @@ spring:
             - Path=/uploads/**
           filters:
             - StripPrefix=1
+        - id: zona-service
+          uri: lb://delibery-service
+          predicates:
+            - Path=/api/zonas/**
+            - Method=GET,POST,PUT,DELETE
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
+                key-resolver: "#{@ipKeyResolver}"
         - id: user-service
           uri: lb://user-service
           predicates:

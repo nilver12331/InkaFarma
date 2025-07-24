@@ -1,6 +1,7 @@
 package com.InkaFarma.user_service.controller;
 
 import com.InkaFarma.user_service.entity.Cliente;
+import com.InkaFarma.user_service.entity.DireccionCliente;
 import com.InkaFarma.user_service.entity.Usuario;
 import com.InkaFarma.user_service.service.ClienteService;
 import org.springframework.http.HttpStatus;
@@ -57,4 +58,36 @@ public class ClienteController {
         }
     }
 
+    @GetMapping("/direcciones/{idCliente}")
+    public ResponseEntity<List<DireccionCliente>> listarDireccionesPorCliente(@PathVariable Integer idCliente) {
+        List<DireccionCliente> direcciones = clienteService.obtenerDireccionesPorCliente(idCliente);
+        if (direcciones.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(direcciones);
+    }
+
+    @PostMapping("/registrarDireccion")
+    public ResponseEntity<DireccionCliente> guardarDireccion(@RequestBody DireccionCliente direccionCliente) {
+        DireccionCliente guardada = clienteService.guardarDireccion(direccionCliente);
+        return ResponseEntity.ok(guardada);
+    }
+    @PutMapping("/direccionDesactivar/{id}")
+    public ResponseEntity<String> desactivarDireccion(@PathVariable Integer id) {
+        boolean resultado = clienteService.desactivarDireccion(id);
+        if (resultado) {
+            return ResponseEntity.ok("Dirección desactivada correctamente.");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/direccion/principal")
+    public ResponseEntity<String> establecerDireccionPrincipal(
+            @RequestParam Integer idDireccion,
+            @RequestParam Integer idCliente) {
+
+        clienteService.marcarComoPrincipal(idDireccion, idCliente);
+        return ResponseEntity.ok("Dirección marcada como principal");
+    }
 }

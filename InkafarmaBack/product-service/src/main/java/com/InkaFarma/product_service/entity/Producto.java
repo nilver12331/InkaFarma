@@ -25,10 +25,15 @@ public class Producto {
     @Column(columnDefinition = "TEXT")  // Define tipo TEXT en la BD
     private String descripcion;
     private double precio;
-    private int stock;
+    private boolean masBuscado;
+    private boolean destacado;
     @Column(nullable = false)
     private boolean activo;
     //Atributos de la clase que no van hacer mapeados
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
     private List<ImagenProducto> imagenProductoList;
+
+    //Atributos de la clase que no van hacer mapeados
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
+    private List<ProductoAtributo> productoAtributoList;
 }

@@ -19,8 +19,4 @@ public class Atributo {
     private int idAtributo;
     private String nombre;
 
-    @OneToMany(mappedBy = "atributo", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<ValorAtributo> valorAtributos;
-
 }

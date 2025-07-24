@@ -1,5 +1,6 @@
 package com.InkaFarma.product_service.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +17,7 @@ public class ProductoAtributo {
     private int idProductoAtributo;
     @ManyToOne
     @JoinColumn(name = "id_producto",referencedColumnName = "idProducto")
+    @JsonIgnore
     private Producto producto;
     @ManyToOne
     @JoinColumn(name = "id_valor_atributo",referencedColumnName = "idValorAtributo")

@@ -20,15 +20,7 @@ public class AtributoService {
         return atributoRepository.save(atributo);
     }
 
-    public Atributo actualizar(int id, Atributo nuevoAtributo) {
-        Atributo existente = atributoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Atributo no encontrado con ID: " + id));
 
-        existente.setNombre(nuevoAtributo.getNombre());
-        existente.setValorAtributos(nuevoAtributo.getValorAtributos());
-
-        return atributoRepository.save(existente);
-    }
 
     public Atributo obtenerPorId(int id) {
         return atributoRepository.findById(id).orElse(null);
