@@ -5,7 +5,6 @@ let carrito = {};
 let listDescuentosHome=[];
 let objDireccion={};
 let listCategoria=[];
-
 /*Buscador de productos*/
 const buscadorPro = document.querySelector('#buscadorPro');
 const modalBuscador = document.querySelector('#modalBuscador');
@@ -17,7 +16,10 @@ function app() {
   obtenerDecuentos();
   mostrarCategorias();
   eventoscategoria();
-  actualizarTotalCarrito();
+  const cliente=JSON.parse(localStorage.getItem('usuario'));
+  if(cliente){
+     actualizarTotalCarrito();
+  }
 }
 async function obtenerDecuentos() {
     try {
@@ -46,7 +48,6 @@ async function mostrarCategorias() {
       const errorText = await response.text();
       throw new Error(errorText);
     }
-
     const data = await response.json();
     listCategoria=data;
     mostrarCategoriaHtml(data);
@@ -205,7 +206,6 @@ async function obtenerProductos() {
     }
 
     listProductos = await response.json();
-    console.log(listProductos);
 
   } catch (error) {
     alert(`Error al obtener producto: ${error.message}`);
@@ -392,7 +392,17 @@ function mostrarCarritoHTML(carrito){
     }else{
       const carritoModal=document.querySelector('#carritoModal');
       if (carritoModal) {
-         carritoModal.close();
+          const divlistCarrito=document.querySelector('#divlistCarrito');
+        if(divlistCarrito){
+          const carritoModal=document.querySelector('#carritoModal');
+          carritoModal.replaceChildren();
+          mostrarToast('No tienes ningún item en el carrito');
+            setTimeout(() => {
+            window.location.href = "/"; // o "/" si tu ruta base es esa
+          }, 2000); 
+        } else{
+                carritoModal.close();
+        }
       }
       mostrarToast('Debes agregar un producto para mostrar el carrito');
     }
@@ -578,6 +588,7 @@ async function validarDireccion(e){
                       if(data.dentroZona==true){
                            objDireccion = {
                           ...objDireccion,
+                          referencia:referencia,
                           idZonaCobertura: data.id,
                           costoEnvio: data.costoEnvio,
                           nombreZona: data.nombreZona,
@@ -697,7 +708,7 @@ function dirigirCarritoDetalle(e){
      // Guardar en localStorage
 
     console.log(carrito);
-    window.location.href = "/main/carrito";
+    window.location.href = "/carrito";
   }else{
     mostrarToast('Es necesario tener un producto en el carrito');
   }

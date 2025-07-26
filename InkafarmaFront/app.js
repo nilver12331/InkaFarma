@@ -18,8 +18,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 const ventasRoutes = require('./routes/main');
 const adminRoutes = require('./routes/admin');
 
-app.use('/main', ventasRoutes);
+app.use('/', ventasRoutes);
 app.use('/admin', adminRoutes);
+
 
 const PORT = 3000;
 app.listen(PORT, () => {

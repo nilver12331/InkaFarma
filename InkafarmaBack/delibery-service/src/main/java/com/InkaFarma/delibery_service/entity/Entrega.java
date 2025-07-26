@@ -18,12 +18,9 @@ public class Entrega {
 
     private Long idOrden; // Relación indirecta con el `orden-service`
 
-    private String direccionCliente;
-    private Double latitud;
-    private Double longitud;
+    private Long idDireccionCliente;
 
-    private LocalDateTime fechaRegistro;
-
+    private LocalDateTime fechaRegistro = LocalDateTime.now();
     private LocalDateTime fechaEntregaEstimada;
 
     private String estado; // Ej: "Pendiente", "En camino", "Entregado", etc.
@@ -31,6 +28,4 @@ public class Entrega {
     private String tipoDireccion; // Ej: "Casa", "Trabajo", "Otros"
 
     private String referencia; // Texto adicional
-
-    private Double costoEnvio; // Copiado desde la `ZonaCobertura` usada
 }

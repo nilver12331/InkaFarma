@@ -260,3 +260,13 @@ function mostrarToast(mensaje) {
         toast.classList.add('hidden');
     }, 3000); // Oculta después de 3 segundos
 }
+
+function mostrarCamposUsuarioClave(mostrar) {
+  const div = document.querySelector('#divUsuarioClave');
+  if (!div) return;
+  if (mostrar) {
+    div.classList.remove('hidden');
+  } else {
+    div.classList.add('hidden');
+  }
+}

@@ -1,5 +1,3 @@
-
-
 let listProductosHome=[];
 document.addEventListener('DOMContentLoaded',appHome);
 

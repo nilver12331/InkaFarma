@@ -109,6 +109,7 @@ public class ClienteService {
 
         return clienteRepository.save(clienteExistente);
     }
+
     /*Obtener direcciones de cliente*/
     public List<DireccionCliente> obtenerDireccionesPorCliente(Integer idCliente) {
         return direccionClienteRepository.findByCliente_IdClienteAndActivoTrue(idCliente);

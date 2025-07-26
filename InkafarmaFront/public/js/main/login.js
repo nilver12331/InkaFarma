@@ -42,23 +42,26 @@ function mostrarHtml() {
     
     const button = document.getElementById('userMenuButton');
     const menu = document.getElementById('userDropdown');
+    actualizarTotalCarrito();
     button.addEventListener('click', () => {
-      menu.classList.toggle('hidden');
+    menu.classList.toggle('hidden');
     });
   } else {
-    // Mostrar modal desde el botón
-    divIniciarSesion.innerHTML = `  <a href="#" class="colorText-1" id="btnLoguinUser">
-                                      <i class="fa-solid fa-bag-shopping"></i>
-                                      <span>Inicia Sesión</span>
-                                  </a>`
-      ;
-      const btnLoguinUser=document.querySelector('#btnLoguinUser');
-      btnLoguinUser?.addEventListener('click', e => {
-        e.preventDefault();
-        document.getElementById('modalLoginRegistro').classList.remove('hidden');
-        showTab('login');
-      });
-
+          // Mostrar modal desde el botón
+          divIniciarSesion.innerHTML = `  <a href="#" class="colorText-1" id="btnLoguinUser">
+                                            <i class="fa-solid fa-bag-shopping"></i>
+                                            <span>Inicia Sesión</span>
+                                        </a>`
+            ;
+            const btnLoguinUser=document.querySelector('#btnLoguinUser');
+            btnLoguinUser?.addEventListener('click', e => {
+              e.preventDefault();
+              document.getElementById('modalLoginRegistro').classList.remove('hidden');
+              showTab('login');
+            });
+            const totalCarrito=document.querySelector('.totalCarrito');
+            totalCarrito.textContent=0;
+            mostrarToast('Cerro sesion correctamente');
   }
 }
 
@@ -78,12 +81,12 @@ async function iniciarSesion() {
     }
 
     const data = await response.json();
-
+    console.log(data);
     // Guardar sesión solo del usuario
     localStorage.setItem('usuario', JSON.stringify(data));
     document.getElementById('modalLoginRegistro').classList.add('hidden');
     mostrarHtml();
-    mostrarToast('Bienvenida', data.nombre);
+    mostrarToast(`Bienvenida ${data.nombre}`);
 
   } catch (error) {
     alert(`Error al iniciar sesión: ${error.message}`);
@@ -94,10 +97,10 @@ async function iniciarSesion() {
 function cerrarSesion() {
   localStorage.removeItem('usuario');
   mostrarHtml();
-  /*window.location.href = "/login"; */
+  window.location.href = "/"; 
 }
 
-//Cunsion para mostrar el iniciar sesion
+//funcion para mostrar el iniciar sesion
 function showTab(tab) {
     const loginTab = document.getElementById('login-tab');
     const registerTab = document.getElementById('register-tab');

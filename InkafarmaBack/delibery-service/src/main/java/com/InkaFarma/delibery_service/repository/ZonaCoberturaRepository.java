@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface ZonaCoberturaRepository extends JpaRepository<ZonaCobertura,Integer> {
     List<ZonaCobertura> findAllByActivoTrue();
+    List<ZonaCobertura> findByActivoTrue();
 }

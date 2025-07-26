@@ -1,28 +1,147 @@
-<div>
-    <div  class="mb-6">
-        <h1 class="font-bold text-3xl">Gestión de clientes</h1>
-        <p class="py-2 text-gray-500">Administra la información de tus clientes</p>
+<div class="px-2">
+    <div class="mb-6">
+        <h1 class="font-bold text-3xl uppercase text-slate-800">Administrador Clientes</h1>
+        <p class="py-2 text-slate-500 text-lg">Administra la información de tus clientes</p>
     </div>
     <div>
-           <table id="table_clientes" class="text-sm table table-striped table-hover">
-                <thead class="bg-gray-100 text-gray-700 mt-4">
-                    <tr>
-                    <th class="px-4 py-2 text-left">Column 1</th>
-                    <th class="px-4 py-2 text-left">Column 2</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="border-t">
-                    <td class="px-4 py-2">Row 1 Data 1</td>
-                    <td class="px-4 py-2">Row 1 Data 2</td>
-                    </tr>
-                    <tr class="border-t">
-                    <td class="px-4 py-2">Row 2 Data 1</td>
-                    <td class="px-4 py-2">Row 2 Data 2</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="py-4 flex justify-end">
+            <button class="btn py-2 border-0 bg-cyan-600 hover:bg-cyan-700 text-slate-100" id="btnAbrirModalAgregar"><i
+                    class="fas fa-plus mr-2"></i> Agregar
+            </button>
+        </div>
+        <div id="divTablaClientes" class="overflow-hidden rounded-lg shadow p-4 tailwind-table bg-slate-50">
+        </div>
     </div>
+    <!--Modal para guardar-->
+    <div id="modalNuevoCliente"
+        class="fixed inset-0 z-50 hidden bg-black/40 flex items-center justify-center overflow-y-auto">
+        <div class="bg-white rounded-lg w-full max-w-3xl shadow-lg p-6">
+            <h2 class="text-xl font-semibold mb-4 text-inka">Nuevo Cliente</h2>
+            <form id="formAgregarCliente" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Columna 1 -->
+                <div>
+                    <label for="usuario" class="block text-sm font-medium text-gray-700">Usuario</label>
+                    <input id="usuario" name="usuario" type="text" required
+                        class="mt-1 w-full rounded border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 px-3 py-2" />
+                </div>
+                <div>
+                    <label for="clave" class="block text-sm font-medium text-gray-700">Clave</label>
+                    <input id="clave" name="clave" type="password" required
+                        class="mt-1 w-full rounded border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 px-3 py-2" />
+                </div>
+
+
+                <div>
+                    <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
+                    <input id="nombre" name="nombre" type="text" required
+                        class="mt-1 w-full rounded border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 px-3 py-2" />
+                </div>
+                <div>
+                    <label for="apellidoPaterno" class="block text-sm font-medium text-gray-700">Apellido
+                        Paterno</label>
+                    <input id="apellidoPaterno" name="apellidoPaterno" type="text" required
+                        class="mt-1 w-full rounded border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 px-3 py-2" />
+                </div>
+                <div>
+                    <label for="apellidoMaterno" class="block text-sm font-medium text-gray-700">Apellido
+                        Materno</label>
+                    <input id="apellidoMaterno" name="apellidoMaterno" type="text" required
+                        class="mt-1 w-full rounded border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 px-3 py-2" />
+                </div>
+                <div>
+                    <label for="dni" class="block text-sm font-medium text-gray-700">DNI</label>
+                    <input id="dni" name="dni" type="text" required
+                        class="mt-1 w-full rounded border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 px-3 py-2" />
+                </div>
+                <div>
+                    <label for="genero" class="block text-sm font-medium text-gray-700">Género</label>
+                    <select id="genero" name="genero" required
+                        class="mt-1 w-full rounded border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 px-3 py-2">
+                        <option value="">Seleccione...</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="correo" class="block text-sm font-medium text-gray-700">Correo</label>
+                    <input id="correo" name="correo" type="email" required
+                        class="mt-1 w-full rounded border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 px-3 py-2" />
+                </div>
+                <div>
+                    <label for="telefono" class="block text-sm font-medium text-gray-700">Telefono</label>
+                    <input id="telefono" name="telefono" type="text" required
+                        class="mt-1 w-full rounded border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 px-3 py-2" />
+                </div>
+                <!-- Botones en toda la fila -->
+                <div class="col-span-1 md:col-span-2 flex justify-end gap-3 pt-4">
+                    <button type="button" id="cancelarCrear" class="btn btn-outline btn-neutral">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="modalEditarCliente"
+        class="fixed inset-0 z-50 hidden bg-black/40 flex items-center justify-center overflow-y-auto">
+        <div class="bg-white rounded-lg w-full max-w-3xl shadow-lg p-6">
+            <h2 class="text-xl font-semibold mb-4 text-inka">Editar Cliente</h2>
+            <form id="formEditarCliente" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="hidden" id="idClienteEditar" name="idClienteEditar" />
+
+                <div>
+                    <label for="nombreEditar" class="block text-sm font-medium text-gray-700">Nombre</label>
+                    <input id="nombreEditar" name="nombreEditar" type="text" required
+                        class="mt-1 w-full rounded border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 px-3 py-2" />
+                </div>
+                <div>
+                    <label for="apellidoPaternoEditar" class="block text-sm font-medium text-gray-700">Apellido
+                        Paterno</label>
+                    <input id="apellidoPaternoEditar" name="apellidoPaternoEditar" type="text" required
+                        class="mt-1 w-full rounded border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 px-3 py-2" />
+                </div>
+                <div>
+                    <label for="apellidoMaternoEditar" class="block text-sm font-medium text-gray-700">Apellido
+                        Materno</label>
+                    <input id="apellidoMaternoEditar" name="apellidoMaternoEditar" type="text" required
+                        class="mt-1 w-full rounded border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 px-3 py-2" />
+                </div>
+                <div>
+                    <label for="dniEditar" class="block text-sm font-medium text-gray-700">DNI</label>
+                    <input id="dniEditar" name="dniEditar" type="text" required
+                        class="mt-1 w-full rounded border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 px-3 py-2" />
+                </div>
+                <div>
+                    <label for="generoEditar" class="block text-sm font-medium text-gray-700">Género</label>
+                    <select id="generoEditar" name="generoEditar" required
+                        class="mt-1 w-full rounded border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 px-3 py-2">
+                        <option value="">Seleccione...</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="correoEditar" class="block text-sm font-medium text-gray-700">Correo</label>
+                    <input id="correoEditar" name="correoEditar" type="email" required
+                        class="mt-1 w-full rounded border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 px-3 py-2" />
+                </div>
+                <div>
+                    <label for="telefonoEditar" class="block text-sm font-medium text-gray-700">Teléfono</label>
+                    <input id="telefonoEditar" name="telefonoEditar" type="text" required
+                        class="mt-1 w-full rounded border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 px-3 py-2" />
+                </div>
+
+                <!-- Botones -->
+                <div class="col-span-1 md:col-span-2 flex justify-end gap-3 pt-4">
+                    <button type="button" id="cancelarEditarCliente"
+                        class="btn btn-outline btn-neutral">Cancelar</button>
+                    <button type="submit" class="btn btn-success" id="btnGuardarCambios">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--Toast-->
+<div id="toast"
+    class="hidden fixed bottom-5 right-5 bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-2 rounded shadow z-50">
 </div>
 
 <script type="module" src="/js/admin/clientes.js"></script>

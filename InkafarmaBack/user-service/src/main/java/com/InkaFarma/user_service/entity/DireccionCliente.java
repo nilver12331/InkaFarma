@@ -22,6 +22,7 @@ public class DireccionCliente {
     private Cliente cliente;
     private String direccionCompleta;
     private Integer idZonaCobertura;
+    private String referencia;
     private String nombreZona;
     private Double costoEnvio;
     private Integer tiempoEntregaEstimadoMinutos;

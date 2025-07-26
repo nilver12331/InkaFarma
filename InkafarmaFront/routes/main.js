@@ -12,5 +12,8 @@ router.get('/catalog', (req, res) => {
 router.get('/carrito', (req, res) => {
   res.render('ventas/carrito');
 });
+router.get('/checkout', (req, res) => {
+  res.render('ventas/checkout', { layout: 'layouts/checkout' });
+});
 
 module.exports = router; 

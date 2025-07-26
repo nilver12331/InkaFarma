@@ -1,0 +1,12 @@
+  .card-option {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .card-option.selected {
+    border-color: #2563eb; /* Azul */
+    background-color: #ebf4ff; /* Fondo azul claro */
+  }

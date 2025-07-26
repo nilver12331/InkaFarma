@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.InkaFarma.delibery_service.repository.ZonaCoberturaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,5 +34,39 @@ public class ZonaCoverturaService {
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
         double distancia = R * c;
         return distancia <= radioKm;
+    }
+
+    public ZonaCobertura crearZona(ZonaCobertura zona) {
+        zona.setActivo(true);
+        return zonaCoberturaRepository.save(zona);
+    }
+    public ZonaCobertura actualizarZona(Integer id, ZonaCobertura zonaActualizada) {
+        return zonaCoberturaRepository.findById(id)
+                .map(zona -> {
+                    zona.setNombre(zonaActualizada.getNombre());
+                    zona.setDistrito(zonaActualizada.getDistrito());
+                    zona.setCentroLatitud(zonaActualizada.getCentroLatitud());
+                    zona.setCentroLongitud(zonaActualizada.getCentroLongitud());
+                    zona.setRadioKm(zonaActualizada.getRadioKm());
+                    zona.setCostoEnvio(zonaActualizada.getCostoEnvio());
+                    zona.setTiempoEntregaEstimadoMinutos(zonaActualizada.getTiempoEntregaEstimadoMinutos());
+                    zona.setActivo(zonaActualizada.getActivo());
+                    return zonaCoberturaRepository.save(zona);
+                }).orElseThrow(() -> new RuntimeException("Zona no encontrada con ID: " + id));
+    }
+
+    public Optional<ZonaCobertura> obtenerZonaPorId(Integer id) {
+        return zonaCoberturaRepository.findById(id);
+    }
+
+    public List<ZonaCobertura> listarZonas() {
+        return zonaCoberturaRepository.findByActivoTrue();  // Solo devuelve las activas
+    }
+
+    public void desactivarZona(Integer id) {
+        zonaCoberturaRepository.findById(id).ifPresent(zona -> {
+            zona.setActivo(false);
+            zonaCoberturaRepository.save(zona);
+        });
     }
 }

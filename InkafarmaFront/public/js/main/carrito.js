@@ -185,14 +185,18 @@ function mostarListCarritoHTML(){
                   }
                 
                 
-               stringResultadoHTML+= `<button class="bg-green-600 text-white w-full py-2 rounded-lg hover:bg-green-700">
-                                          Ir a comprar
+               stringResultadoHTML+= `<button class="bg-green-600 text-white w-full py-2 rounded-lg hover:bg-green-700"
+                                       onclick="validarIrCompar(event)">
+                                       <i class="fas fa-shopping-bag"></i>  Ir a comprar
                                       </button>`
         divlistCarrito.innerHTML=stringHTML;
         divResumenCompra.innerHTML=stringResultadoHTML;
     }else{
         const divlistCarrito=document.querySelector('#divlistCarrito');
         divlistCarrito.replaceChildren();
+        const divResumenCompra=document.querySelector('#divResumenCompra');
+        divResumenCompra.replaceChildren();
+        divResumenCompra.innerHTML=`<h2>No tiene ningun producto agregado a su carrito</h2>`;
         divlistCarrito.innerHTML=`<h2>No tiene ningun producto agregado a su carrito</h2>`;
         mostrarToast("Lista carrito no encontrado");
     }
@@ -252,6 +256,7 @@ async function actualizarCantidadItem(item, nuevaCantidad, carrito) {
   }
 }
 
+/*Fucion eliminar del carrito*/
 function eliminarDelCarrito(e){
     e.preventDefault();
     const carritoJSON = localStorage.getItem('carrito');
@@ -276,11 +281,37 @@ async function eliminarDesItemCarrito(id,carrito){
         /*Borrar el item del localstorage*/
         carrito.items = carrito.items.filter(item => item.idItem !== id);
         localStorage.setItem('carrito', JSON.stringify(carrito));
+       actualizarTotalCarrito();
         mostarListCarritoHTML();
+        
         mostrarToast('se elimino correctamente');
       } catch (error) {
         alert(`Error al elimnar item carrito: ${error.message}`);
       }
+}
+
+function validarIrCompar(e){
+    e.preventDefault();
+    const miDireccion=listMisDirecciones.find(direccion => direccion.principal === true);
+  
+    const cliente = JSON.parse(localStorage.getItem('usuario'));
+    const carritoJSON = localStorage.getItem('carrito');
+    const carrito = JSON.parse(carritoJSON);
+    if(cliente){
+      if(carrito && carrito.items.length>0){
+          console.log("Mi direcion es",miDireccion);
+        if(miDireccion){
+          localStorage.setItem('direccion', JSON.stringify(miDireccion));
+          window.location.href="/checkout";
+        }else{
+          mostrarToast('No tienes una direccion agregada');
+        }
+      }else{
+        mostrarToast('No tienes productos agregados al carrito');
+      }
+    }else{
+      mostrarToast('no existe un sesion iniciada');
+    }
 }
 
 
